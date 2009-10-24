@@ -1,0 +1,49 @@
+# depslib dependency file v1.0
+1256081541 source:e:\programacao\dickbox\src\bodymanager.cpp
+	"BodyManager.h"
+
+1256080850 e:\programacao\dickbox\src\bodymanager.h
+	<vector>
+	<queue>
+	"GameUtils.h"
+	"Bomb.h"
+
+1256079302 e:\programacao\dickbox\src\gameutils.h
+	<Box2D.h>
+	<Allegro.h>
+
+1256081558 e:\programacao\dickbox\src\bomb.h
+	<Box2D.h>
+
+1255928370 source:e:\programacao\dickbox\src\bomb.cpp
+	"Bomb.h"
+
+1256077434 source:e:\programacao\dickbox\src\engick.cpp
+	"Engick.h"
+
+1255928233 e:\programacao\dickbox\src\engick.h
+	"Game.h"
+
+1255928288 e:\programacao\dickbox\src\game.h
+	"GameUtils.h"
+	"BodyManager.h"
+	"InputReader.h"
+	<time.h>
+
+1256081013 e:\programacao\dickbox\src\inputreader.h
+	<Allegro.h>
+
+1256340491 source:e:\programacao\dickbox\src\game.cpp
+	"Game.h"
+
+1256079295 source:e:\programacao\dickbox\src\gameutils.cpp
+	"GameUtils.h"
+
+1256081013 source:e:\programacao\dickbox\src\inputreader.cpp
+	"InputReader.h"
+
+1256340491 source:e:\programacao\dickbox\src\main.cpp
+	"Engick.h"
+
+1255930015 source:e:\programacao\dickbox\res\icon.rc
+

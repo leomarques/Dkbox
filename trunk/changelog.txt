@@ -1,0 +1,16 @@
+r4 (24/10/2009):
+Initial features:
+- Random bodies.
+- Boxes.
+- Circles.
+- Bombs.
+- Custom boxes.
+- Static mode.
+- Pause.
+- Mouse lock.
+
+Tools versions:
+- gcc 4.4.1 (TDM-2).
+- Code::Blocks 8.02.
+- Allegro 4.2.2.
+- Box2D 2.0.1.
