@@ -87,7 +87,7 @@ bool gameStep(void)
     // Now we let Newton do his thing.
     if (simulate == 1)
     {
-        world->Step(timeStep, 10);
+        world->Step(timeStep, iterations);
 
         bm->destroyOOBBodies();
         bm->checkBombs();
@@ -103,16 +103,13 @@ void gameRender(int counter1)
     clear_bitmap(buffer);
 
     // Drawing bodies.
-    int x, y;
-    BITMAP *bmp;
-
     int count = 0, bodyCount = world->GetBodyCount() - 1;
     for (b2Body* body = world->GetBodyList(); count < bodyCount; body = body->GetNext(), count++)
     {
-        bmp = (BITMAP*) (body->GetUserData());
+        BITMAP* bmp = (BITMAP*) (body->GetUserData());
 
-        x = (int) ((body->GetPosition().x * scale) - (bmp->w / 2) + (SCREEN_W / 2));
-        y = (int) (- ((body->GetPosition().y * scale) + (bmp->h / 2)) + SCREEN_H);
+        int x = (int) ((body->GetPosition().x * SCALE) - (bmp->w / 2) + (SCREEN_W / 2));
+        int y = (int) (- ((body->GetPosition().y * SCALE) + (bmp->h / 2)) + SCREEN_H);
 
         rotate_sprite(buffer, bmp, x, y, fixmul(ftofix(- body->GetAngle()), radtofix_r));
     }
@@ -123,6 +120,7 @@ void gameRender(int counter1)
     }
 
     // Drawing menu.
+    // TODO: Fix hardcoded coordinates.
     textprintf_centre_ex(buffer, font, SCREEN_W / 2, 40, GREEN, -1, "Hold TAB for menu");
 
     textprintf_ex(buffer, font, 10, 15, GRAY, -1, "Body type:");

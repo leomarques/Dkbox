@@ -1,3 +1,7 @@
+r5 (31/10/2009):
+- Added some defines to remove hardcode.
+- Added RANDOM().
+
 r4 (24/10/2009):
 Initial features:
 - Random bodies.

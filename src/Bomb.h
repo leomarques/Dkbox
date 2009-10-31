@@ -3,6 +3,9 @@
 
 #include <Box2D.h>
 
+#define EXPLOSION 1.3f
+#define FUSETIME 120  // 1 second = 60.
+
 class Bomb
 {
     void blowUp(void) const;

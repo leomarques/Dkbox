@@ -26,10 +26,10 @@ void init(void)
     push_config_state();
     set_config_file("config.ini");
 
-    int resX = get_config_int(NULL, "resX", 800);
-    int resY = get_config_int(NULL, "resY", 600);
+    int resX = get_config_int(NULL, "resX", DEFAULTRESX);
+    int resY = get_config_int(NULL, "resY", DEFAULTRESY);
 
-    set_color_depth(get_config_int(NULL, "color depth", 32));
+    set_color_depth(get_config_int(NULL, "color depth", DEFAULTCOLORDEPTH));
 
     if (ustricmp(get_config_string(NULL, "fullscreen", "false"), "true") == 0)
     {
@@ -51,7 +51,7 @@ void init(void)
     counter = 0;
     LOCK_VARIABLE(counter);
     LOCK_FUNCTION(timer);
-    install_int_ex(timer, BPS_TO_TIMER(60));
+    install_int_ex(timer, BPS_TO_TIMER(FPS));
 }
 
 ////////////////////
