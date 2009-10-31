@@ -13,12 +13,16 @@
 #define GRAY makecol(180, 180, 180)
 #define TRANSPARENT makecol(255, 0, 255)
 
+#define RANDOM(f, l) (rand() % (l + 1) + f)
+//#define SCALE 60.0f
+
+extern const float32 SCALE;
 extern const float32 timeStep;
-extern const float32 scale;
+extern const int iterations;
 
 inline b2Vec2 coordAllegToB2(int x, int y)
 {
-    return b2Vec2((x - (SCREEN_W / 2)) / scale, - (y - SCREEN_H) / scale);
+    return b2Vec2((x - (SCREEN_W / 2)) / SCALE, - (y - SCREEN_H) / SCALE);
 }
 
 #endif // GAMEUTILS_H_INCLUDED

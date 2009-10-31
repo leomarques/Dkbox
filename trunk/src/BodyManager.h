@@ -7,13 +7,14 @@
 #include "GameUtils.h"
 #include "Bomb.h"
 
-#define RANDBODYSIZE (rand() % 35 + 6) / 100.0f
+#define RANDBODYSIZE (RANDOM(6, 35)) / 100.0f
 #define FRICTION 0.3f
 #define DENSITY 1.0f
 #define ANGULARDAMPING 0.7f
 #define BOXRESTITUTION 0.23f
 #define CIRCRESTITUTION 0.5f
 #define BOMBRADIUS 0.087f
+#define MAXBODIES 500
 
 using namespace std;
 

@@ -9,7 +9,7 @@ Bomb::Bomb(b2Body *body, b2World *world)
 
 bool Bomb::checkFuse(void)
 {
-    if (++fuse >= 120) // 120 = 2 seconds.
+    if (++fuse >= FUSETIME)
     {
         blowUp();
         return true;
@@ -28,7 +28,7 @@ void Bomb::blowUp(void) const
         float32 dist = b2Vec2(dx, dy).Length();
         dx /= dist;
         dy /= dist;
-        float32 pow = 1.10f / dist;
+        float32 pow = EXPLOSION / dist;
         body->ApplyImpulse(pow * b2Vec2(dx, dy), body->GetWorldCenter());
     }
 }

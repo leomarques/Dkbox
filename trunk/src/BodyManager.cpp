@@ -54,7 +54,7 @@ void BodyManager::getInput(const int in)
 
 void BodyManager::makeBody(const b2Vec2 coordinates, const int mouseButton)
 {
-    if (bmWorld->GetBodyCount() > 500) return;
+    if (bmWorld->GetBodyCount() > MAXBODIES) return;
 
     if (mouseButton == -2)
     {
@@ -65,7 +65,7 @@ void BodyManager::makeBody(const b2Vec2 coordinates, const int mouseButton)
     switch (bodyType)
     {
     case 1:
-        switch (rand() % 2)
+        switch (RANDOM(0, 1))
         {
         case 0:
             createBody(coordinates, b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
@@ -180,7 +180,7 @@ void BodyManager::createGround(void)
 // Creates rectangles bitmaps.
 BITMAP* BodyManager::createBodyBitmap(const b2Vec2 dimensions)
 {
-    BITMAP* bmp = create_bitmap((int) (dimensions.x * 2 * scale), (int) (dimensions.y * 2 * scale));
+    BITMAP* bmp = create_bitmap((int) (dimensions.x * 2 * SCALE), (int) (dimensions.y * 2 * SCALE));
     if (!bmp) return bmp;
 
     clear(bmp);
@@ -192,11 +192,11 @@ BITMAP* BodyManager::createBodyBitmap(const b2Vec2 dimensions)
 // Creates circles bitmaps.
 BITMAP* BodyManager::createBodyBitmap(const float32 radius, const int color)
 {
-    BITMAP* bmp = create_bitmap((int) (radius * 2 * scale) + 1, (int) (radius * 2 * scale) + 1);
+    BITMAP* bmp = create_bitmap((int) (radius * 2 * SCALE) + 1, (int) (radius * 2 * SCALE) + 1);
     if (!bmp) return bmp;
 
     clear_to_color(bmp, TRANSPARENT);
-    circle(bmp, (int) (radius * scale), (int) (radius * scale), (int) (radius * scale), color);
+    circle(bmp, (int) (radius * SCALE), (int) (radius * SCALE), (int) (radius * SCALE), color);
     line(bmp, bmp->w / 2, bmp->h / 2, bmp->w / 2, 0, color);
 
     return bmp;
