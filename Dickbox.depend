@@ -18,7 +18,7 @@
 1256968365 source:e:\programacao\dickbox\src\bomb.cpp
 	"Bomb.h"
 
-1256967819 source:e:\programacao\dickbox\src\engick.cpp
+1257365975 source:e:\programacao\dickbox\src\engick.cpp
 	"Engick.h"
 
 1256967823 e:\programacao\dickbox\src\engick.h
@@ -33,10 +33,10 @@
 1256363854 e:\programacao\dickbox\src\inputreader.h
 	<Allegro.h>
 
-1256969703 source:e:\programacao\dickbox\src\game.cpp
+1256970204 source:e:\programacao\dickbox\src\game.cpp
 	"Game.h"
 
-1256969672 source:e:\programacao\dickbox\src\gameutils.cpp
+1256970223 source:e:\programacao\dickbox\src\gameutils.cpp
 	"GameUtils.h"
 
 1256363854 source:e:\programacao\dickbox\src\inputreader.cpp

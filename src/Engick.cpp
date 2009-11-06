@@ -1,8 +1,7 @@
 #include "Engick.h"
 
-volatile long long int counter;
+volatile long long int counter, speedControl;
 volatile int closeButtonPressed;
-long long int speedControl = 0;
 
 ///////////////////
 // Start engine. //
@@ -48,7 +47,7 @@ void init(void)
     set_close_button_callback(closeButtonHandler);
 
     // Sets up the timer to control game speed.
-    counter = 0;
+    counter = speedControl = 0;
     LOCK_VARIABLE(counter);
     LOCK_FUNCTION(timer);
     install_int_ex(timer, BPS_TO_TIMER(FPS));
@@ -97,10 +96,6 @@ END_OF_FUNCTION(closeButtonHandler)
 
 void timer(void)
 {
-    if (++counter < 0)
-    {
-        counter = 0;
-        speedControl = 0;
-    }
+    counter++;
 }
 END_OF_FUNCTION(timer)

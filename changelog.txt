@@ -1,3 +1,7 @@
+r6 (06/11/2009):
+- Removed unnecessary check in timer function.
+- Binaries compiled with the recompiled libbox2d.a.
+
 r5 (31/10/2009):
 - Added some defines to remove hardcode.
 - Added RANDOM().
@@ -14,7 +18,7 @@ Initial features:
 - Mouse lock.
 
 Tools versions:
-- gcc 4.4.1 (TDM-2).
-- Code::Blocks 8.02.
 - Allegro 4.2.2.
 - Box2D 2.0.1.
+- Code::Blocks 8.02.
+Binaries compiled with gcc 4.4.1 (TDM-2) on Windows 7 32bits.
