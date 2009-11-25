@@ -32,6 +32,7 @@ class BodyManager
     BITMAP* createBodyBitmap(const b2Vec2 dimensions);
     BITMAP* createBodyBitmap(const float32 radius, const int color);
     void createGround(void);
+    void entrance(void);
     void customMode(void);
     void destroyBody(b2Body *body);
     void destroyLastBody(void);
@@ -49,6 +50,8 @@ public:
     void checkBombs(void);
     void destroyOOBBodies(void);
     void checkCustom(void);
+
+    void testConcave(void);
 
     inline int GetBombCount(void)
     {

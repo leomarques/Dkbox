@@ -1,14 +1,14 @@
 # depslib dependency file v1.0
-1256969703 source:e:\programacao\dickbox\src\bodymanager.cpp
+1258420881 source:e:\programacao\dickbox\src\bodymanager.cpp
 	"BodyManager.h"
 
-1256969374 e:\programacao\dickbox\src\bodymanager.h
+1258332538 e:\programacao\dickbox\src\bodymanager.h
 	<vector>
 	<queue>
 	"GameUtils.h"
 	"Bomb.h"
 
-1256970258 e:\programacao\dickbox\src\gameutils.h
+1259090597 e:\programacao\dickbox\src\gameutils.h
 	<Box2D.h>
 	<Allegro.h>
 
@@ -21,7 +21,7 @@
 1257365975 source:e:\programacao\dickbox\src\engick.cpp
 	"Engick.h"
 
-1256967823 e:\programacao\dickbox\src\engick.h
+1257992615 e:\programacao\dickbox\src\engick.h
 	"Game.h"
 
 1256363854 e:\programacao\dickbox\src\game.h
@@ -33,10 +33,10 @@
 1256363854 e:\programacao\dickbox\src\inputreader.h
 	<Allegro.h>
 
-1256970204 source:e:\programacao\dickbox\src\game.cpp
+1259090393 source:e:\programacao\dickbox\src\game.cpp
 	"Game.h"
 
-1256970223 source:e:\programacao\dickbox\src\gameutils.cpp
+1257992663 source:e:\programacao\dickbox\src\gameutils.cpp
 	"GameUtils.h"
 
 1256363854 source:e:\programacao\dickbox\src\inputreader.cpp
@@ -45,5 +45,5 @@
 1256363854 source:e:\programacao\dickbox\src\main.cpp
 	"Engick.h"
 
-1255930015 source:e:\programacao\dickbox\res\icon.rc
+1256363873 source:e:\programacao\dickbox\res\icon.rc
 
