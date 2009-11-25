@@ -10,7 +10,7 @@ BodyManager::BodyManager(b2World *world)
     staticMode = -1;
 
     createGround();
-    createBody(coordAllegToB2(SCREEN_W / 2, SCREEN_H / 2), b2Vec2(0.4f, 0.4f));
+    entrance();
 }
 
 BodyManager::~BodyManager(void)
@@ -122,6 +122,25 @@ void BodyManager::createBody(const b2Vec2 coordinates, const b2Vec2 dimensions)
     if (!body->GetUserData()) bmWorld->DestroyBody(body);
 }
 
+void BodyManager::testConcave(void)
+{
+    b2BodyDef bodyDef;
+    b2Body* body = bmWorld->CreateBody(&bodyDef);
+
+    b2PolygonDef shapeDef;
+    if (staticMode == -1) shapeDef.density = DENSITY;
+    shapeDef.friction = FRICTION;
+    shapeDef.restitution = BOXRESTITUTION;
+
+    float32 x[] = {-1.5, -1.5, 0, 1.5, 1.5, -1.5};
+    float32 y[] = {4, 7, 5, 7, 4, 4};
+    b2Polygon pgon(x, y, 6);
+
+    DecomposeConvexAndAddTo(&pgon, &(*body), &shapeDef);
+
+    body->SetUserData(createBodyBitmap(b2Vec2(1, 1)));
+}
+
 // Creates circles.
 void BodyManager::createBody(const b2Vec2 coordinates, const float32 radius)
 {
@@ -167,6 +186,27 @@ void BodyManager::createBody(const b2Vec2 coordinates)
     if (!body->GetUserData()) bmWorld->DestroyBody(body);
 
     bombs.push_back(new Bomb(body, bmWorld));
+}
+
+void BodyManager::entrance(void)
+{
+    float32 size = 0.2;
+    int rows = 15;
+
+    float32 x = -(size * rows) + size, y = 5;
+
+    for (int i = rows; i > 0; i--, x += size, y += (size * 2))
+    {
+        float32 xl = x;
+        for (int j = 0; j < i; j++, xl += (size * 2))
+        {
+            createBody(b2Vec2(xl, y), b2Vec2(size, size));
+        }
+    }
+
+    createBody(b2Vec2(-0.5, 0.3));
+    createBody(b2Vec2(0.5, 0.3));
+    createBody(b2Vec2(0, 0.3));
 }
 
 void BodyManager::createGround(void)

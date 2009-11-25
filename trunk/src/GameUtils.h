@@ -13,10 +13,10 @@
 #define GRAY makecol(180, 180, 180)
 #define TRANSPARENT makecol(255, 0, 255)
 
-#define RANDOM(f, l) (rand() % (l + 1) + f)
-//#define SCALE 60.0f
+#define RANDOM(f, l) (rand() % (l - f + 1) + f)
+#define SCALE 60.0f
 
-extern const float32 SCALE;
+//extern const float32 SCALE;
 extern const float32 timeStep;
 extern const int iterations;
 

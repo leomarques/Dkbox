@@ -1,3 +1,13 @@
+R7 (25/11/2009):
+- SCALE is now a #define.
+- Convex decomposition(Box2D SVN r2) added to lib.
+- Added failing testConcave().
+- Moved config.ini to Resources folder inside Code::Blocks.
+- Removed libs paths inside Code::Blocks.
+- Added pyramid entrance.
+- Removed unnecessary show_mouse(NULL) from gameEnd().
+- Fixed RANDOM().
+
 r6 (06/11/2009):
 - Removed unnecessary check in timer function.
 - Binaries compiled with the recompiled libbox2d.a.
@@ -21,4 +31,4 @@ Tools versions:
 - Allegro 4.2.2.
 - Box2D 2.0.1.
 - Code::Blocks 8.02.
-Binaries compiled with gcc 4.4.1 (TDM-2) on Windows 7 32bits.
+Binaries compiled with MinGW (gcc 4.4.1 TDM-2) on Windows 7 32bits.

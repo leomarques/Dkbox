@@ -69,6 +69,7 @@ bool gameStep(void)
 
     case 8: // Play/pause simulation.
         simulate *= -1;
+        //bm->testConcave();
         break;
 
     case 9: // Turn on/off mouse lock.
@@ -107,6 +108,7 @@ void gameRender(int counter1)
     for (b2Body* body = world->GetBodyList(); count < bodyCount; body = body->GetNext(), count++)
     {
         BITMAP* bmp = (BITMAP*) (body->GetUserData());
+        if (!bmp) continue;
 
         int x = (int) ((body->GetPosition().x * SCALE) - (bmp->w / 2) + (SCREEN_W / 2));
         int y = (int) (- ((body->GetPosition().y * SCALE) + (bmp->h / 2)) + SCREEN_H);
