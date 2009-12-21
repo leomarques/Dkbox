@@ -4,6 +4,7 @@
 #include "GameUtils.h"
 #include "BodyManager.h"
 #include "InputReader.h"
+#include "DebugDraw.h"
 
 #include <time.h>
 

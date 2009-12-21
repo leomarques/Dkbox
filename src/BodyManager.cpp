@@ -22,8 +22,8 @@ void BodyManager::getInput(const int in)
 {
     switch (in)
     {
-    case -1:
-    case -2:
+    case MOUSE1:
+    case MOUSE2:
         makeBody(coordAllegToB2(mouse_x, mouse_y), in);
         break;
 
@@ -56,7 +56,7 @@ void BodyManager::makeBody(const b2Vec2 coordinates, const int mouseButton)
 {
     if (bmWorld->GetBodyCount() > MAXBODIES) return;
 
-    if (mouseButton == -2)
+    if (mouseButton == MOUSE2)
     {
         createBody(coordinates);
         return;
@@ -223,7 +223,7 @@ BITMAP* BodyManager::createBodyBitmap(const b2Vec2 dimensions)
     BITMAP* bmp = create_bitmap((int) (dimensions.x * 2 * SCALE), (int) (dimensions.y * 2 * SCALE));
     if (!bmp) return bmp;
 
-    clear(bmp);
+    clear_to_color(bmp, TRANSPARENT);
     rect(bmp, 0, 0, bmp->w - 1, bmp->h - 1, GREEN);
 
     return bmp;

@@ -4,8 +4,9 @@ BITMAP *buffer;
 
 b2World *world;
 BodyManager *bm;
+DebugDraw *debugDraw;
 int simulate = 1;
-bool menuOn = false, customOn = false;
+bool menuOn = false, customOn = false, debugDrawOn = false, bmpDrawOn = true;
 long long int counter2 = 1;
 
 void gameInit(void)
@@ -13,6 +14,7 @@ void gameInit(void)
     set_window_title("Dickbox by LeoDick");
     buffer = create_bitmap(SCREEN_W, SCREEN_H);
     if (!buffer) exit(-1);
+    clear_bitmap(buffer);
 
     // Creating world.
     b2AABB worldAABB;
@@ -23,6 +25,15 @@ void gameInit(void)
     world = new b2World(worldAABB, b2Vec2(0.0f, -10.0f), true);
 
     world->SetBoundaryListener(new BoundaryListener());
+
+    // Initializing DebugDraw.
+    // TODO: Bind this.
+    debugDraw = new DebugDraw(buffer);
+    uint32 flags = 0;
+	flags += b2DebugDraw::e_shapeBit;
+	flags += b2DebugDraw::e_coreShapeBit;
+	debugDraw->SetFlags(flags);
+	if (debugDrawOn) world->SetDebugDraw(debugDraw);
 
     bm = new BodyManager(world);
 
@@ -68,8 +79,8 @@ bool gameStep(void)
         break;
 
     case 8: // Play/pause simulation.
-        simulate *= -1;
-        //bm->testConcave();
+        //simulate *= -1;
+        bm->testConcave();
         break;
 
     case 9: // Turn on/off mouse lock.
@@ -77,8 +88,29 @@ bool gameStep(void)
             mouseLock *= -1;
         break;
 
-    case TAB: // Menu.
+    case KEYTAB: // Menu.
         menuOn = true;
+        break;
+
+    case KEYD: // DebugDraw.
+        if (debugDrawOn)
+        {
+            if (bmpDrawOn)
+            {
+                bmpDrawOn = false;
+            }
+            else
+            {
+                bmpDrawOn = true;
+                world->SetDebugDraw(NULL);
+                debugDrawOn = false;
+            }
+        }
+        else
+        {
+            world->SetDebugDraw(debugDraw);
+            debugDrawOn = true;
+        }
         break;
 
     default:
@@ -101,10 +133,9 @@ bool gameStep(void)
 
 void gameRender(int counter1)
 {
-    clear_bitmap(buffer);
-
-    // Drawing bodies.
+    // Drawing bodies
     int count = 0, bodyCount = world->GetBodyCount() - 1;
+    if (bmpDrawOn)
     for (b2Body* body = world->GetBodyList(); count < bodyCount; body = body->GetNext(), count++)
     {
         BITMAP* bmp = (BITMAP*) (body->GetUserData());
@@ -195,6 +226,7 @@ void gameRender(int counter1)
     draw_sprite(buffer, mouse_sprite, mouse_x, mouse_y);
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+    clear_bitmap(buffer);
 }
 
 void gameEnd(void)
