@@ -1,6 +1,6 @@
 #include "InputReader.h"
 
-bool mouse1Free, mouse2Free, keyFree[10];
+bool keyFree[NKEYS];
 int mouseLock;
 
 int readInput(void)
@@ -10,28 +10,28 @@ int readInput(void)
         if (mouseLock == -1) return MOUSE1;
         else
         {
-            if (mouse1Free)
+            if (key[MOUSE1])
             {
-                mouse1Free = false;
+                key[MOUSE1] = false;
                 return MOUSE1;
             }
         }
     }
-    else mouse1Free = true;
+    else key[MOUSE1] = true;
 
     if (mouse_b == 2)
     {
         if (mouseLock == -1) return MOUSE2;
         else
         {
-            if (mouse2Free)
+            if (key[MOUSE2])
             {
-                mouse2Free = false;
+                key[MOUSE2] = false;
                 return MOUSE2;
             }
         }
     }
-    else mouse2Free = true;
+    else key[MOUSE2] = true;
 
     for (int i = 0; i < 10; i++)
     {
@@ -46,17 +46,26 @@ int readInput(void)
         else keyFree[i] = true;
     }
 
-    if (key[KEY_TAB]) return TAB;
+    if (key[KEY_D])
+    {
+        if (keyFree[KEYD])
+        {
+            keyFree[KEYD] = false;
+            return KEYD;
+        }
+    }
+    else keyFree[KEYD] = true;
+
+    if (key[KEY_TAB]) return KEYTAB;
 
     if (key[KEY_ESC]) return QUIT;
+
 
     return NOINPUT;
 }
 
 void freeAllInput(void)
 {
-    mouse1Free = true;
-    mouse2Free = true;
     mouseLock = 1;
     for (int i = 0; i < 10; i++) keyFree[i] = true;
 }

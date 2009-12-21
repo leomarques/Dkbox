@@ -3,6 +3,7 @@
 
 #include <Box2D.h>
 #include <Allegro.h>
+#include <math.h>
 
 #define RED makecol(255, 0, 0)
 #define GREEN makecol(0, 255, 0)
@@ -23,6 +24,16 @@ extern const int iterations;
 inline b2Vec2 coordAllegToB2(int x, int y)
 {
     return b2Vec2((x - (SCREEN_W / 2)) / SCALE, - (y - SCREEN_H) / SCALE);
+}
+
+inline int coordXB2ToAlleg(float32 x)
+{
+    return (int) roundf(x * SCALE + (SCREEN_W / 2));
+}
+
+inline int coordYB2ToAlleg(float32 y)
+{
+    return (int) roundf(- y * SCALE + SCREEN_H );
 }
 
 #endif // GAMEUTILS_H_INCLUDED

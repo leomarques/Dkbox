@@ -6,6 +6,7 @@
 
 #include "GameUtils.h"
 #include "Bomb.h"
+#include "InputReader.h"
 
 #define RANDBODYSIZE (RANDOM(6, 35)) / 100.0f
 #define FRICTION 0.3f

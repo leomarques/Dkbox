@@ -1,4 +1,9 @@
-R7 (25/11/2009):
+r8 (21/12/2009):
+- Implemented DebugDraw.
+- Changed InputReader key control.
+- Added coord|XY|B2ToAlleg().
+
+r7 (25/11/2009):
 - SCALE is now a #define.
 - Convex decomposition(Box2D SVN r2) added to lib.
 - Added failing testConcave().
