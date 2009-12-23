@@ -6,8 +6,6 @@
 #include "InputReader.h"
 #include "DebugDraw.h"
 
-#include <time.h>
-
 void gameInit(void);
 bool gameStep(void);
 void gameRender(int counter1);

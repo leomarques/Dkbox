@@ -3,10 +3,12 @@
 
 #include <vector>
 #include <queue>
+#include <time.h>
 
 #include "GameUtils.h"
 #include "Bomb.h"
 #include "InputReader.h"
+#include "MathUtils.h"
 
 #define RANDBODYSIZE (RANDOM(6, 35)) / 100.0f
 #define FRICTION 0.3f
@@ -16,6 +18,7 @@
 #define CIRCRESTITUTION 0.5f
 #define BOMBRADIUS 0.087f
 #define MAXBODIES 500
+#define MINPOINTDISTANCE 20
 
 using namespace std;
 
@@ -30,11 +33,13 @@ class BodyManager
     void createBody(const b2Vec2 coordinates, const b2Vec2 dimensions);
     void createBody(const b2Vec2 coordinates, const float32 radius);
     void createBody(const b2Vec2 coordinates);
+    void createBody(void);
     BITMAP* createBodyBitmap(const b2Vec2 dimensions);
     BITMAP* createBodyBitmap(const float32 radius, const int color);
     void createGround(void);
-    void entrance(void);
-    void customMode(void);
+    void pyramidShow(void);
+    void customBoxMode(void);
+    void freeDrawMode(void);
     void destroyBody(b2Body *body);
     void destroyLastBody(void);
     void destroyAllBodies(void);
@@ -42,17 +47,17 @@ class BodyManager
 
 public:
     int bodyType, staticMode;
-    bool customModeOn;
+    bool customModeOn, freeDrawModeOn;
     int cusX1, cusX2, cusY1, cusY2;
+    vector<Point> freeDrawPoints;
 
     BodyManager(b2World *world);
     ~BodyManager(void);
     void getInput(const int in);
     void checkBombs(void);
     void destroyOOBBodies(void);
-    void checkCustom(void);
-
-    void testConcave(void);
+    void checkCustomBox(void);
+    void checkFreeDraw(void);
 
     inline int GetBombCount(void)
     {

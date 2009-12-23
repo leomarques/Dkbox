@@ -1,12 +1,11 @@
 #include "Game.h"
 
-BITMAP *buffer;
-
 b2World *world;
 BodyManager *bm;
 DebugDraw *debugDraw;
+BITMAP *buffer;
 int simulate = 1;
-bool menuOn = false, customOn = false, debugDrawOn = false, bmpDrawOn = true;
+bool menuOn = false, customBoxOn = false, freeDrawOn = true, debugDrawOn = true, bmpDrawOn = false;
 long long int counter2 = 1;
 
 void gameInit(void)
@@ -30,10 +29,10 @@ void gameInit(void)
     // TODO: Bind this.
     debugDraw = new DebugDraw(buffer);
     uint32 flags = 0;
-	flags += b2DebugDraw::e_shapeBit;
-	flags += b2DebugDraw::e_coreShapeBit;
-	debugDraw->SetFlags(flags);
-	if (debugDrawOn) world->SetDebugDraw(debugDraw);
+    flags += b2DebugDraw::e_shapeBit;
+    flags += b2DebugDraw::e_coreShapeBit;
+    debugDraw->SetFlags(flags);
+    if (debugDrawOn) world->SetDebugDraw(debugDraw);
 
     bm = new BodyManager(world);
 
@@ -61,14 +60,20 @@ bool gameStep(void)
     case 1: // Random body.
     case 2: // Boxes only.
     case 3: // Circles only.
-    case 4: // Bombs.
-        customOn = false;
+        customBoxOn = false;
+        freeDrawOn = false;
+        bm->getInput(in);
+        break;
+
+    case 4: // Free draw mode.
+        mouseLock = -1;
+        freeDrawOn = true;
         bm->getInput(in);
         break;
 
     case 5: // Custom box mode.
         mouseLock = -1;
-        customOn = true;
+        customBoxOn = true;
         bm->getInput(in);
         break;
 
@@ -79,12 +84,11 @@ bool gameStep(void)
         break;
 
     case 8: // Play/pause simulation.
-        //simulate *= -1;
-        bm->testConcave();
+        simulate *= -1;
         break;
 
     case 9: // Turn on/off mouse lock.
-        if (!customOn)
+        if (!customBoxOn && !freeDrawOn)
             mouseLock *= -1;
         break;
 
@@ -126,7 +130,8 @@ bool gameStep(void)
         bm->checkBombs();
     }
 
-    bm->checkCustom();
+    bm->checkCustomBox();
+    bm->checkFreeDraw();
 
     return true;
 }
@@ -136,20 +141,36 @@ void gameRender(int counter1)
     // Drawing bodies
     int count = 0, bodyCount = world->GetBodyCount() - 1;
     if (bmpDrawOn)
-    for (b2Body* body = world->GetBodyList(); count < bodyCount; body = body->GetNext(), count++)
-    {
-        BITMAP* bmp = (BITMAP*) (body->GetUserData());
-        if (!bmp) continue;
+        for (b2Body* body = world->GetBodyList(); count < bodyCount; body = body->GetNext(), count++)
+        {
+            BITMAP* bmp = (BITMAP*) (body->GetUserData());
+            if (!bmp) continue;
 
-        int x = (int) ((body->GetPosition().x * SCALE) - (bmp->w / 2) + (SCREEN_W / 2));
-        int y = (int) (- ((body->GetPosition().y * SCALE) + (bmp->h / 2)) + SCREEN_H);
+            int x = (int) ((body->GetPosition().x * SCALE) - (bmp->w / 2) + (SCREEN_W / 2));
+            int y = (int) (- ((body->GetPosition().y * SCALE) + (bmp->h / 2)) + SCREEN_H);
 
-        rotate_sprite(buffer, bmp, x, y, fixmul(ftofix(- body->GetAngle()), radtofix_r));
-    }
+            rotate_sprite(buffer, bmp, x, y, fixmul(ftofix(- body->GetAngle()), radtofix_r));
+            //printf("%f %f\n", body->GetPosition().x, body->GetPosition().y);
+        }
 
+    // Drawing custom box.
     if (bm->customModeOn)
     {
         rect(buffer, bm->cusX1, bm->cusY1, bm->cusX2, bm->cusY2, GREEN);
+    }
+
+    // Drawing free draw.
+    if (bm->freeDrawModeOn && bm->freeDrawPoints.size() >= 2)
+    {
+        Point p0 = bm->freeDrawPoints[0], p1;
+        for (int i = 1; i < (int) bm->freeDrawPoints.size(); i++)
+        {
+            p1 = bm->freeDrawPoints[i];
+
+            line(buffer, p0.x, p0.y, p1.x, p1.y, BLUE);
+
+            p0 = p1;
+        }
     }
 
     // Drawing menu.
@@ -172,24 +193,24 @@ void gameRender(int counter1)
         break;
 
     case 4:
-        textprintf_ex(buffer, font, 100, 15, RED, -1, "Bombs");
+        textprintf_ex(buffer, font, 100, 15, RED, -1, "Free draw");
         break;
 
     case 5:
-        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom");
+        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom box");
         break;
 
     default:
         break;
     }
 
-    textprintf_ex(buffer, font, 190, 15, GRAY, -1, "Static mode:");
-    if (bm->staticMode == 1) textprintf_ex(buffer, font, 295, 15, GREEN, -1, "On");
-    else textprintf_ex(buffer, font, 295, 15, RED, -1, "Off");
+    textprintf_ex(buffer, font, 200, 15, GRAY, -1, "Static mode:");
+    if (bm->staticMode == 1) textprintf_ex(buffer, font, 310, 15, GREEN, -1, "On");
+    else textprintf_ex(buffer, font, 310, 15, RED, -1, "Off");
 
-    textprintf_ex(buffer, font, 355, 15, GRAY, -1, "Mouse lock:");
-    if (mouseLock == 1) textprintf_ex(buffer, font, 450, 15, GREEN, -1, "On");
-    else textprintf_ex(buffer, font, 450, 15, RED, -1, "Off");
+    textprintf_ex(buffer, font, 400, 15, GRAY, -1, "Mouse lock:");
+    if (mouseLock == 1) textprintf_ex(buffer, font, 500, 15, GREEN, -1, "On");
+    else textprintf_ex(buffer, font, 500, 15, RED, -1, "Off");
 
     if (simulate == -1)
         textprintf_centre_ex(buffer, font, SCREEN_W / 2, 65, YELLOW, -1, "PAUSED");
@@ -198,6 +219,7 @@ void gameRender(int counter1)
     textprintf_ex(buffer, font, 70, 45, bodyCount > 400 ? RED : GRAY, -1, "%d", bodyCount);
     textprintf_ex(buffer, font, 10, 55, GRAY, -1, "Bombs: %d", bm->GetBombCount());
 
+    // Calculate FPS.
     counter2 = (int) (counter1 - counter2);
     if (counter2 == 0) counter2 = 1;
     int fps = 60 / counter2;
@@ -213,7 +235,7 @@ void gameRender(int counter1)
         textprintf_ex(buffer, font, 10, 110, BLUE, -1, "1 : Random bodies");
         textprintf_ex(buffer, font, 10, 120, BLUE, -1, "2 : Boxes");
         textprintf_ex(buffer, font, 10, 130, BLUE, -1, "3 : Circles");
-        textprintf_ex(buffer, font, 10, 140, BLUE, -1, "4 : Bombs");
+        textprintf_ex(buffer, font, 10, 140, BLUE, -1, "4 : Free draw");
         textprintf_ex(buffer, font, 10, 150, BLUE, -1, "5 : Custom boxes");
         textprintf_ex(buffer, font, 10, 160, BLUE, -1, "6 : Destroy last body");
         textprintf_ex(buffer, font, 10, 170, BLUE, -1, "7 : Static mode");

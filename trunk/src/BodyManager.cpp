@@ -5,12 +5,13 @@ queue<b2Body *> OOBBodies;
 BodyManager::BodyManager(b2World *world)
 {
     bmWorld = world;
-    bodyType = 1;
+    bodyType = 4;
     customModeOn = false;
+    freeDrawModeOn = true;
     staticMode = -1;
 
     createGround();
-    entrance();
+    //pyramidShow();
 }
 
 BodyManager::~BodyManager(void)
@@ -89,11 +90,11 @@ void BodyManager::makeBody(const b2Vec2 coordinates, const int mouseButton)
         break;
 
     case 4:
-        createBody(coordinates);
+        freeDrawMode();
         break;
 
     case 5:
-        customMode();
+        customBoxMode();
         break;
 
     default:
@@ -122,7 +123,8 @@ void BodyManager::createBody(const b2Vec2 coordinates, const b2Vec2 dimensions)
     if (!body->GetUserData()) bmWorld->DestroyBody(body);
 }
 
-void BodyManager::testConcave(void)
+// Creates free drawn polygons.
+void BodyManager::createBody(void)
 {
     b2BodyDef bodyDef;
     b2Body* body = bmWorld->CreateBody(&bodyDef);
@@ -132,13 +134,19 @@ void BodyManager::testConcave(void)
     shapeDef.friction = FRICTION;
     shapeDef.restitution = BOXRESTITUTION;
 
-    float32 x[] = {-1.5, -1.5, 0, 1.5, 1.5, -1.5};
-    float32 y[] = {4, 7, 5, 7, 4, 4};
-    b2Polygon pgon(x, y, 6);
+    float32 x[1 << 9], y[1 << 9];
+    for (int i = 0; i < (int) freeDrawPoints.size(); i++)
+    {
+        b2Vec2 c = coordAllegToB2(freeDrawPoints[i].x, freeDrawPoints[i].y);
+        x[i] = c.x;
+        y[i] = c.y;
+    }
 
-    DecomposeConvexAndAddTo(&pgon, &(*body), &shapeDef);
+    b2Polygon pgon(x, y, (int) freeDrawPoints.size());
 
-    body->SetUserData(createBodyBitmap(b2Vec2(1, 1)));
+    DecomposeConvexAndAddTo(&pgon, body, &shapeDef);
+
+    body->SetMassFromShapes();
 }
 
 // Creates circles.
@@ -188,7 +196,7 @@ void BodyManager::createBody(const b2Vec2 coordinates)
     bombs.push_back(new Bomb(body, bmWorld));
 }
 
-void BodyManager::entrance(void)
+void BodyManager::pyramidShow(void)
 {
     float32 size = 0.2;
     int rows = 15;
@@ -243,7 +251,7 @@ BITMAP* BodyManager::createBodyBitmap(const float32 radius, const int color)
 }
 
 // Updates mouse position to draw custom box.
-void BodyManager::customMode(void)
+void BodyManager::customBoxMode(void)
 {
     if (!customModeOn)
     {
@@ -261,7 +269,7 @@ void BodyManager::customMode(void)
     }
 }
 
-void BodyManager::checkCustom(void)
+void BodyManager::checkCustomBox(void)
 {
     if (mouse_b != 1 && customModeOn)
     {
@@ -280,6 +288,37 @@ void BodyManager::checkCustom(void)
         if (h < 0.1f) h = 0.1f;
 
         createBody(b2Vec2(c1.x + (c2.x - c1.x) / 2.0f, c1.y + (c2.y - c1.y) / 2.0f), b2Vec2(w / 2.0f, h / 2.0f));
+    }
+}
+
+void BodyManager::freeDrawMode(void)
+{
+    if (!freeDrawModeOn)
+    {
+        freeDrawModeOn = true;
+
+        freeDrawPoints.push_back(Point(mouse_x, mouse_y));
+    }
+    else
+    {
+        Point p(mouse_x, mouse_y);
+        double d = pointDistance(p, freeDrawPoints.back());
+        if (d > MINPOINTDISTANCE)
+        {
+            freeDrawPoints.push_back(p);
+        }
+    }
+}
+
+void BodyManager::checkFreeDraw(void)
+{
+    if (mouse_b != 1 && freeDrawModeOn)
+    {
+        freeDrawModeOn = false;
+
+        createBody();
+
+        freeDrawPoints.clear();
     }
 }
 
