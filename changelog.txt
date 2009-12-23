@@ -1,3 +1,8 @@
+r9 (23/12/2009):
+- Implemented Free draw with concave polygons (no images).
+- Added MathUtils.h.
+- Deleted debug binary.
+
 r8 (21/12/2009):
 - Implemented DebugDraw.
 - Changed InputReader key control.

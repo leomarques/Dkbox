@@ -60,6 +60,7 @@
 		<Unit filename="src\GameUtils.h" />
 		<Unit filename="src\InputReader.cpp" />
 		<Unit filename="src\InputReader.h" />
+		<Unit filename="src\MathUtils.h" />
 		<Unit filename="src\main.cpp" />
 		<Extensions>
 			<code_completion />
