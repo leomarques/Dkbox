@@ -1,34 +1,37 @@
 #include "Bomb.h"
 
-Bomb::Bomb(b2Body *body, b2World *world)
+Bomb::Bomb(b2Body *body, b2World *world, BITMAP *bmp) : Body(body, world, bmp)
 {
-    bBody = body;
-    bWorld = world;
-    fuse = 0;
+    fuse = 120;
+    isBomb = true;
 }
 
-bool Bomb::checkFuse(void)
+Bomb::~Bomb(void)
 {
-    if (++fuse >= FUSETIME)
+    destroy_bitmap(bmp);
+    world->DestroyBody(body);
+}
+
+void Bomb::checkFuse(void)
+{
+    if (--fuse <= 0)
     {
         blowUp();
-        return true;
+        markedForDeletion = true;
     }
-    return false;
 }
 
-void Bomb::blowUp(void) const
+void Bomb::blowUp(void)
 {
-    // Applies an impulse on all bodies based on distance.
-    int count = 0, bodyCount = bWorld->GetBodyCount() - 1;
-    for (b2Body* body = bWorld->GetBodyList(); count < bodyCount; body = body->GetNext(), count++)
+    int bodyCount = world->GetBodyCount() - 1;
+    for (b2Body* b = world->GetBodyList(); bodyCount > 0; b = b->GetNext(), bodyCount--)
     {
-        float32 dx = body->GetPosition().x - bBody->GetPosition().x;
-        float32 dy = body->GetPosition().y - bBody->GetPosition().y;
+        float32 dx = b->GetPosition().x - body->GetPosition().x;
+        float32 dy = b->GetPosition().y - body->GetPosition().y;
         float32 dist = b2Vec2(dx, dy).Length();
         dx /= dist;
         dy /= dist;
         float32 pow = EXPLOSION / dist;
-        body->ApplyImpulse(pow * b2Vec2(dx, dy), body->GetWorldCenter());
+        b->ApplyImpulse(pow * b2Vec2(dx, dy), b->GetWorldCenter());
     }
 }

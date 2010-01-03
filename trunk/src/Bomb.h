@@ -2,26 +2,29 @@
 #define BOMB_H_INCLUDED
 
 #include <Box2D.h>
+#include <Allegro.h>
+#include "Body.h"
 
 #define EXPLOSION 1.3f
-#define FUSETIME 120  // 1 second = 60.
+#define FUSETIME 120
 
-class Bomb
+class Bomb : public Body
 {
-    void blowUp(void) const;
-
-    b2Body *bBody;
-    b2World *bWorld;
-    int fuse;
-
 public:
-    Bomb(b2Body *body, b2World *world);
-    bool checkFuse(void);
+    Bomb(b2Body *body, b2World *world, BITMAP *bmp);
+    ~Bomb(void);
 
-    inline b2Body* GetBody(void)
+    void checkFuse(void);
+
+    bool operator==(Bomb *b)
     {
-        return bBody;
+        return body == b->body;
     }
+
+private:
+    void blowUp(void);
+
+    int fuse;
 };
 
 #endif // BOMB_H_INCLUDED

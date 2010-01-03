@@ -1,13 +1,9 @@
-#include "Engick.h"
+#include "Engine.h"
 
-volatile long long int counter, speedControl;
-volatile int closeButtonPressed;
+volatile int counter, fpsControl, closeButtonPressed;
+BITMAP *buffer;
 
-///////////////////
-// Start engine. //
-///////////////////
-
-void engickStart(void)
+void startEngine(void)
 {
     init();
     playGame();
@@ -17,11 +13,10 @@ void engickStart(void)
 void init(void)
 {
     if (allegro_init() ||
-        install_keyboard() ||
-        install_mouse() == -1)
+            install_keyboard() ||
+            install_mouse() == -1)
         abortOnError();
 
-    // Reads configurations from config.ini, if not found, uses default.
     push_config_state();
     set_config_file("config.ini");
 
@@ -41,42 +36,39 @@ void init(void)
 
     pop_config_state();
 
-    // Sets the window close button to actually close the window.
+    buffer = create_bitmap(SCREEN_W, SCREEN_H);
+    if (!buffer) exit(-2);
+    clear_bitmap(buffer);
+
+    set_window_title("Dickbox by LeoDick");
+
+    inputInit();
+
     closeButtonPressed = FALSE;
     LOCK_FUNCTION(closeButtonHandler);
     set_close_button_callback(closeButtonHandler);
 
-    // Sets up the timer to control game speed.
-    counter = speedControl = 0;
+    counter = fpsControl = 0;
     LOCK_VARIABLE(counter);
-    LOCK_FUNCTION(timer);
+    LOCK_FUNCTION(counterr);
     install_int_ex(timer, BPS_TO_TIMER(FPS));
 }
-
-////////////////////
-// Play the game. //
-////////////////////
 
 void playGame(void)
 {
     gameInit();
 
-    //Game loop.
     while (!closeButtonPressed)
     {
-        if (counter >= speedControl)
+        if (counter >= fpsControl)
         {
             if (!gameStep()) return;
-            gameRender(counter);
+            gameRender();
 
-            speedControl = counter + 1;
+            fpsControl = counter + 1;
         }
     }
 }
-
-//////////////////////////////
-// Close-related functions. //
-//////////////////////////////
 
 void abortOnError(void)
 {
@@ -90,12 +82,8 @@ void closeButtonHandler(void)
 }
 END_OF_FUNCTION(closeButtonHandler)
 
-/////////////////////
-// Timer function. //
-/////////////////////
-
 void timer(void)
 {
     counter++;
 }
-END_OF_FUNCTION(timer)
+END_OF_FUNCTION(counterr)

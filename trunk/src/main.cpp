@@ -1,13 +1,14 @@
 /***************************
-Dickbox, by LeoDick.
+Dickbox by LeoDick.
 
 leommarques7@gmail.com
 ***************************/
 
-#include "Engick.h"
+#include "Engine.h"
 
 int main(void)
 {
-    engickStart();
+    startEngine();
     return 0;
-} END_OF_MAIN()
+}
+END_OF_MAIN()

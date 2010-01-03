@@ -1,14 +1,12 @@
 #ifndef GAME_H_INCLUDED
 #define GAME_H_INCLUDED
 
-#include "GameUtils.h"
-#include "BodyManager.h"
-#include "InputReader.h"
-#include "DebugDraw.h"
+#include <Allegro.h>
+#include "Stage.h"
 
 void gameInit(void);
 bool gameStep(void);
-void gameRender(int counter1);
+void gameRender(void);
 void gameEnd(void);
 
 #endif // GAME_H_INCLUDED
