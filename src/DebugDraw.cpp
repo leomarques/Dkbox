@@ -1,37 +1,31 @@
 #include "DebugDraw.h"
 
-DebugDraw::DebugDraw(BITMAP *bmp)
+DebugDraw::DebugDraw(void)
 {
-    this->bmp = bmp;
+    uint32 flags = 0;
+    flags += b2DebugDraw::e_shapeBit;
+    flags += b2DebugDraw::e_coreShapeBit;
+    SetFlags(flags);
 }
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
-    int lx = coordXB2ToAlleg(vertices[0].x), ly = coordYB2ToAlleg(vertices[0].y), ax, ay;
-    for (int32 i = 1; i < vertexCount; ++i)
+    for (int32 i = 1; i < vertexCount; i++)
     {
-        ax = coordXB2ToAlleg(vertices[i].x);
-        ay = coordYB2ToAlleg(vertices[i].y);
-
-        line(bmp, lx, ly, ax, ay, BLUE);
-
-        lx = ax;
-        ly = ay;
+        drawLine(buffer, coordB2ToAlleg(vertices[i]), coordB2ToAlleg(vertices[i - 1]), BLUE);
     }
 
-    ax = coordXB2ToAlleg(vertices[0].x);
-    ay = coordYB2ToAlleg(vertices[0].y);
-    line(bmp, lx, ly, ax, ay, BLUE);
+    drawLine(buffer, coordB2ToAlleg(vertices[vertexCount - 1]), coordB2ToAlleg(vertices[0]), BLUE);
 }
 
 void DebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 {
-    circle(bmp, coordXB2ToAlleg(center.x), coordYB2ToAlleg(center.y), (int) (radius * SCALE), BLUE);
+    drawCircle(buffer, coordB2ToAlleg(center), (int) (radius * SCALE), BLUE);
 }
 
 void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
-    line(bmp, coordXB2ToAlleg(p1.x), coordYB2ToAlleg(p1.y), coordXB2ToAlleg(p2.x), coordYB2ToAlleg(p2.y), BLUE);
+    drawLine(buffer, coordB2ToAlleg(p1), coordB2ToAlleg(p2), BLUE);
 }
 
 void DebugDraw::DrawXForm(const b2XForm& xf){}

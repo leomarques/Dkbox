@@ -1,3 +1,10 @@
+r10 (03/01/2010):
+- Added World class which incorporated BodyManager.
+- Added Body class, Bomb now inherits from it.
+- Added stage class.
+- New Input.
+- Removed "custom box" and "free draw" features, they'll be back on next rev.
+
 r9 (23/12/2009):
 - Implemented Free draw with concave polygons (no images).
 - Added MathUtils.h.
@@ -12,7 +19,6 @@ r7 (25/11/2009):
 - SCALE is now a #define.
 - Convex decomposition(Box2D SVN r2) added to lib.
 - Added failing testConcave().
-- Moved config.ini to Resources folder inside Code::Blocks.
 - Removed libs paths inside Code::Blocks.
 - Added pyramid entrance.
 - Removed unnecessary show_mouse(NULL) from gameEnd().

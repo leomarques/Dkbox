@@ -46,25 +46,30 @@
 			<Option compilerVar="WINDRES" />
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="src\BodyManager.cpp" />
-		<Unit filename="src\BodyManager.h" />
+		<Unit filename="src\Body.h" />
 		<Unit filename="src\Bomb.cpp" />
 		<Unit filename="src\Bomb.h" />
 		<Unit filename="src\DebugDraw.cpp" />
 		<Unit filename="src\DebugDraw.h" />
-		<Unit filename="src\Engick.cpp" />
-		<Unit filename="src\Engick.h" />
+		<Unit filename="src\Engine.cpp" />
+		<Unit filename="src\Engine.h" />
 		<Unit filename="src\Game.cpp" />
 		<Unit filename="src\Game.h" />
-		<Unit filename="src\GameUtils.cpp" />
 		<Unit filename="src\GameUtils.h" />
-		<Unit filename="src\InputReader.cpp" />
-		<Unit filename="src\InputReader.h" />
+		<Unit filename="src\Input.cpp" />
+		<Unit filename="src\Input.h" />
 		<Unit filename="src\MathUtils.h" />
+		<Unit filename="src\RenderUtils.cpp" />
+		<Unit filename="src\RenderUtils.h" />
+		<Unit filename="src\Stage.cpp" />
+		<Unit filename="src\Stage.h" />
+		<Unit filename="src\World.cpp" />
+		<Unit filename="src\World.h" />
 		<Unit filename="src\main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

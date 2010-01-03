@@ -1,63 +1,85 @@
 # depslib dependency file v1.0
-1261538901 source:e:\programacao\dickbox\src\bodymanager.cpp
-	"BodyManager.h"
+1262499301 source:d:\programacao\dickbox\src\bomb.cpp
+	"Bomb.h"
 
-1261538611 e:\programacao\dickbox\src\bodymanager.h
+1262418056 d:\programacao\dickbox\src\bomb.h
+	<Box2D.h>
+	<Allegro.h>
+	"Body.h"
+
+1262401119 d:\programacao\dickbox\src\body.h
+	<Box2D.h>
+	<Allegro.h>
+
+1262420133 source:d:\programacao\dickbox\src\debugdraw.cpp
+	"DebugDraw.h"
+
+1262401187 d:\programacao\dickbox\src\debugdraw.h
+	<Allegro.h>
+	"RenderUtils.h"
+	"MathUtils.h"
+	"Engine.h"
+
+1262400997 d:\programacao\dickbox\src\renderutils.h
+	<Allegro.h>
+	<Box2D.h>
+	"MathUtils.h"
+
+1262421417 d:\programacao\dickbox\src\mathutils.h
+
+1262494557 d:\programacao\dickbox\src\engine.h
+	<Allegro.h>
+	"Game.h"
+	"Input.h"
+
+1262400767 d:\programacao\dickbox\src\game.h
+	<Allegro.h>
+	"Stage.h"
+
+1262499767 d:\programacao\dickbox\src\stage.h
+	<Allegro.h>
+	"World.h"
+	"GameUtils.h"
+	"Input.h"
+	"Engine.h"
+
+1262499757 d:\programacao\dickbox\src\world.h
+	<Box2D.h>
+	<Allegro.h>
 	<vector>
 	<queue>
-	<time.h>
-	"GameUtils.h"
+	<algorithm>
+	"DebugDraw.h"
+	"Body.h"
 	"Bomb.h"
-	"InputReader.h"
-	"MathUtils.h"
 
-1261505434 e:\programacao\dickbox\src\gameutils.h
-	<Box2D.h>
+1262401273 d:\programacao\dickbox\src\gameutils.h
 	<Allegro.h>
+	"RenderUtils.h"
+	"MathUtils.h"
 	<math.h>
-	"MathUtils.h"
 
-1256968395 e:\programacao\dickbox\src\bomb.h
-	<Box2D.h>
-
-1256968365 source:e:\programacao\dickbox\src\bomb.cpp
-	"Bomb.h"
-
-1257365975 source:e:\programacao\dickbox\src\engick.cpp
-	"Engick.h"
-
-1257992615 e:\programacao\dickbox\src\engick.h
-	"Game.h"
-
-1261504181 e:\programacao\dickbox\src\game.h
-	"GameUtils.h"
-	"BodyManager.h"
-	"InputReader.h"
-	"DebugDraw.h"
-
-1261505731 e:\programacao\dickbox\src\inputreader.h
+1262421151 d:\programacao\dickbox\src\input.h
 	<Allegro.h>
 
-1261539136 source:e:\programacao\dickbox\src\game.cpp
+1262403515 source:d:\programacao\dickbox\src\engine.cpp
+	"Engine.h"
+
+1262387953 source:d:\programacao\dickbox\src\game.cpp
 	"Game.h"
 
-1261504634 source:e:\programacao\dickbox\src\gameutils.cpp
-	"GameUtils.h"
+1262421201 source:d:\programacao\dickbox\src\input.cpp
+	"Input.h"
 
-1261538809 source:e:\programacao\dickbox\src\inputreader.cpp
-	"InputReader.h"
+1262384548 source:d:\programacao\dickbox\src\renderutils.cpp
+	"RenderUtils.h"
 
-1256363854 source:e:\programacao\dickbox\src\main.cpp
-	"Engick.h"
+1262498855 source:d:\programacao\dickbox\src\stage.cpp
+	"Stage.h"
 
-1256363873 source:e:\programacao\dickbox\res\icon.rc
+1262498547 source:d:\programacao\dickbox\src\world.cpp
+	"World.h"
 
-1261422605 e:\programacao\dickbox\src\debugdraw.h
-	"GameUtils.h"
-
-1261427988 source:e:\programacao\dickbox\src\debugdraw.cpp
-	"DebugDraw.h"
-
-1261505244 e:\programacao\dickbox\src\mathutils.h
-	"math.h"
+1262494495 source:d:\programacao\dickbox\src\main.cpp
+	"Engine.h"
 
