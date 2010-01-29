@@ -7,13 +7,14 @@
 #include <queue>
 #include <algorithm>
 
-using namespace std;
-
+#include "RenderUtils.h"
+#include "MathUtils.h"
 #include "DebugDraw.h"
 #include "Body.h"
 #include "Bomb.h"
+#include "FreeDraw.h"
 
-class DebugDraw;
+using namespace std;
 
 #define TIMESTEP 1.0f / 60.0f
 #define ITERATIONS 10
@@ -36,13 +37,14 @@ public:
     ~World(void);
 
     void simulate(void);
-    void toggleDebugDraw(void);
+    void setDebugDraw(DebugDraw *debugDraw);
     void toggleSimulation(void);
     void toggleStaticMode(void);
 
     bool makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions);
     bool makeCircle(const b2Vec2 coordinates, const float32 radius);
     bool makeBomb(const b2Vec2 coordinates);
+    Body* makeBody(vector<Point> points);
 
     void destroyBody(Body *body);
     void destroyLastBody(void);
@@ -50,8 +52,6 @@ public:
 
 private:
     b2World *world;
-    DebugDraw *debugDraw;
-    bool debugDrawOn;
 
     void afterStepChecks(void);
 };

@@ -2,12 +2,15 @@
 #define STAGE_H
 
 #include <Allegro.h>
+#include <Box2D.h>
+
 #include "World.h"
+#include "DebugDraw.h"
+#include "FreeDraw.h"
 #include "GameUtils.h"
+#include "MathUtils.h"
 #include "Input.h"
 #include "Engine.h"
-
-class World;
 
 #define RANDBODYSIZE (RANDOM(6, 35)) / 100.0f
 
@@ -21,13 +24,16 @@ public:
 
 private:
     World *world;
+    DebugDraw *debugDraw;
+    FreeDraw *freeDraw;
     bool menuOn, debugDrawOn, bmpDrawOn;
     volatile int dt;
 
-    enum BodyType { Random, Box, Circle };
+    enum BodyType { Random, Box, Circle, _FreeDraw };
 
     BodyType bodyType;
 
+    void toggleDebugDraw(void);
     void createGround(void);
     void pyramidShow(void);
 };

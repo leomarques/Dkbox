@@ -4,28 +4,52 @@
 #include <Box2D.h>
 #include <Allegro.h>
 
+#include "MathUtils.h"
+#include "GameUtils.h"
+
 class Body
 {
 public:
     b2Body *body;
-    b2World *world;
     BITMAP *bmp;
     bool markedForDeletion, isBomb;
 
-    Body(b2Body *body, b2World *world, BITMAP *bmp)
+    Body(b2Body *_body)
     {
-        this->body = body;
+        body = _body;
         body->SetUserData(this);
-        this->world = world;
-        this->bmp = bmp;
         markedForDeletion = false;
         isBomb = false;
+    }
+
+    Body(b2Body *_body, BITMAP *_bmp)
+    {
+        body = _body;
+        body->SetUserData(this);
+        markedForDeletion = false;
+        isBomb = false;
+        bmp = _bmp;
     }
 
     ~Body(void)
     {
         destroy_bitmap(bmp);
-        world->DestroyBody(body);
+        getWorld()->DestroyBody(body);
+    }
+
+    b2World* getWorld(void)
+    {
+        return body->GetWorld();
+    }
+
+    b2Vec2 getB2Position(void)
+    {
+        return body->GetWorldCenter();
+    }
+
+    Point getAllegPosition(void)
+    {
+        return coordB2ToAlleg(getB2Position());
     }
 
     bool operator==(Body *b)

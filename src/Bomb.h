@@ -3,6 +3,7 @@
 
 #include <Box2D.h>
 #include <Allegro.h>
+
 #include "Body.h"
 
 #define EXPLOSION 1.3f
@@ -11,7 +12,7 @@
 class Bomb : public Body
 {
 public:
-    Bomb(b2Body *body, b2World *world, BITMAP *bmp);
+    Bomb(b2Body *body, BITMAP *bmp);
     ~Bomb(void);
 
     void checkFuse(void);

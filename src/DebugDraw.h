@@ -1,15 +1,17 @@
 #ifndef DEBUGDRAW_H_INCLUDED
 #define DEBUGDRAW_H_INCLUDED
 
+#include <Box2D.h>
 #include <Allegro.h>
+
 #include "RenderUtils.h"
-#include "MathUtils.h"
-#include "Engine.h"
+#include "GameUtils.h"
 
 class DebugDraw : public b2DebugDraw
 {
+    BITMAP *bmp;
 public:
-    DebugDraw(void);
+    DebugDraw(BITMAP *_bmp);
 
     void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
     void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
