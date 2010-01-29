@@ -20,5 +20,4 @@ void gameRender(void)
 void gameEnd(void)
 {
     delete stage;
-    destroy_bitmap(buffer);
 }

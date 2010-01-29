@@ -3,15 +3,23 @@
 Stage::Stage()
 {
     world = new World();
-    bodyType = Random;
+    debugDraw = new DebugDraw(buffer);
+    freeDraw = new FreeDraw();
+
+    bodyType = _FreeDraw;
     debugDrawOn = false;
     bmpDrawOn = true;
     dt = counter;
+    setMouseLock(false);
+    //toggleDebugDraw();
+
     createGround();
 }
 
 Stage::~Stage()
 {
+    delete freeDraw;
+    delete debugDraw;
     delete world;
 }
 
@@ -29,53 +37,65 @@ bool Stage::step(void)
         {
         case Random:
             if (RANDOM(0, 1))
-                world->makeBox(coordAllegToB2(mouse_x, mouse_y), b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
+                world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
             else
-                world->makeCircle(coordAllegToB2(mouse_x, mouse_y), RANDBODYSIZE);
+                world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), RANDBODYSIZE);
             break;
 
         case Box:
-            world->makeBox(coordAllegToB2(mouse_x, mouse_y), b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
+            world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
             break;
 
         case Circle:
-            world->makeCircle(coordAllegToB2(mouse_x, mouse_y), RANDBODYSIZE);
+            world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), RANDBODYSIZE);
             break;
+
+        case _FreeDraw:
+            freeDraw->takePoint(Point(mouse_x, mouse_y));
+            break;
+        }
+    }
+    else
+    {
+        if (freeDraw->On)
+        {
+            freeDraw->makeBody(world);
         }
     }
 
     if (mouse[1])
-    {
-        world->makeBomb(coordAllegToB2(mouse_x, mouse_y));
-    }
+        world->makeBomb(coordAllegToB2(Point(mouse_x, mouse_y)));
 
     if (keys[KEY1])
-    {
         bodyType = Random;
-    }
 
     if (keys[KEY2])
-    {
         bodyType = Box;
-    }
 
     if (keys[KEY3])
-    {
         bodyType = Circle;
-    }
 
     if (keys[KEY4])
     {
-        pyramidShow();
+        bodyType = _FreeDraw;
+        setMouseLock(false);
     }
 
-    if (keys[KEY6]) world->destroyLastBody();
+    if (keys[KEY5])
+        pyramidShow();
 
-    if (keys[KEY7]) world->toggleStaticMode();
+    if (keys[KEY6])
+        world->destroyLastBody();
 
-    if (keys[KEY8]) world->toggleSimulation();
+    if (keys[KEY7])
+        world->toggleStaticMode();
 
-    if (keys[KEY9]) toggleMouseLock();
+    if (keys[KEY8])
+        world->toggleSimulation();
+
+    if (keys[KEY9])
+        if (bodyType != _FreeDraw)
+            toggleMouseLock();
 
     if (keys[KEY0])
     {
@@ -97,14 +117,12 @@ bool Stage::step(void)
             else
             {
                 bmpDrawOn = true;
-                world->toggleDebugDraw();
-                debugDrawOn = false;
+                toggleDebugDraw();
             }
         }
         else
         {
-            world->toggleDebugDraw();
-            debugDrawOn = true;
+            toggleDebugDraw();
         }
     }
 
@@ -122,11 +140,17 @@ void Stage::render(void)
             BITMAP *bmp = b->bmp;
             if (!bmp) continue;
 
-            int x = (int) ((b->body->GetPosition().x * SCALE) - (bmp->w / 2) + (SCREEN_W / 2));
-            int y = (int) (- ((b->body->GetPosition().y * SCALE) + (bmp->h / 2)) + SCREEN_H);
+            Point p = b->getAllegPosition();
+            int x = p.x - (bmp->w / 2);
+            int y = p.y - (bmp->h / 2);
 
             rotate_sprite(buffer, bmp, x, y, fixmul(ftofix(- b->body->GetAngle()), radtofix_r));
         }
+
+    if (freeDraw->On)
+    {
+        draw_sprite(buffer, freeDraw->bmp, 0, 0);
+    }
 
     /*************************************************************************************************/
     // TODO: Bind this.
@@ -145,6 +169,10 @@ void Stage::render(void)
 
     case Circle:
         textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Circle");
+        break;
+
+    case _FreeDraw:
+        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "FreeDraw");
         break;
 
     default:
@@ -181,7 +209,7 @@ textprintf_ex(buffer, font, 110, 65, fps < FPS ? fps < (FPS / 2) ? RED : YELLOW 
         textprintf_ex(buffer, font, 10, 120, BLUE, -1, "2 : Box");
         textprintf_ex(buffer, font, 10, 130, BLUE, -1, "3 : Circle");
         textprintf_ex(buffer, font, 10, 140, BLUE, -1, "4 : Free draw");
-        textprintf_ex(buffer, font, 10, 150, BLUE, -1, "5 : Custom box");
+        textprintf_ex(buffer, font, 10, 150, BLUE, -1, "5 : Pyramid");
         textprintf_ex(buffer, font, 10, 160, BLUE, -1, "6 : Destroy last body");
         textprintf_ex(buffer, font, 10, 170, BLUE, -1, "7 : Toggle static mode");
         textprintf_ex(buffer, font, 10, 180, BLUE, -1, "8 : Pause");
@@ -197,10 +225,16 @@ textprintf_ex(buffer, font, 110, 65, fps < FPS ? fps < (FPS / 2) ? RED : YELLOW 
     clear_bitmap(buffer);
 }
 
+void Stage::toggleDebugDraw(void)
+{
+    world->setDebugDraw(debugDrawOn ? NULL : debugDraw);
+    debugDrawOn = !debugDrawOn;
+}
+
 void Stage::createGround(void)
 {
     world->staticModeOn = true;
-    world->makeBox(coordAllegToB2(SCREEN_W / 2, SCREEN_H - 15), b2Vec2(6.0f, 0.15f));
+    world->makeBox(coordAllegToB2(Point(SCREEN_W / 2, SCREEN_H - 15)), b2Vec2(6.0f, 0.15f));
     world->staticModeOn = false;
 }
 

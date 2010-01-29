@@ -40,9 +40,10 @@ void init(void)
     if (!buffer) exit(-2);
     clear_bitmap(buffer);
 
-    set_window_title("Dickbox by LeoDick");
+    set_window_title(WINTITLE);
 
     inputInit();
+    srand(time(NULL));
 
     closeButtonPressed = FALSE;
     LOCK_FUNCTION(closeButtonHandler);
@@ -50,7 +51,7 @@ void init(void)
 
     counter = fpsControl = 0;
     LOCK_VARIABLE(counter);
-    LOCK_FUNCTION(counterr);
+    LOCK_FUNCTION(timer);
     install_int_ex(timer, BPS_TO_TIMER(FPS));
 }
 
@@ -68,6 +69,8 @@ void playGame(void)
             fpsControl = counter + 1;
         }
     }
+
+    destroy_bitmap(buffer);
 }
 
 void abortOnError(void)
@@ -86,4 +89,4 @@ void timer(void)
 {
     counter++;
 }
-END_OF_FUNCTION(counterr)
+END_OF_FUNCTION(timer)

@@ -1,6 +1,6 @@
 #include "Bomb.h"
 
-Bomb::Bomb(b2Body *body, b2World *world, BITMAP *bmp) : Body(body, world, bmp)
+Bomb::Bomb(b2Body *body, BITMAP *bmp) : Body(body, bmp)
 {
     fuse = 120;
     isBomb = true;
@@ -9,7 +9,7 @@ Bomb::Bomb(b2Body *body, b2World *world, BITMAP *bmp) : Body(body, world, bmp)
 Bomb::~Bomb(void)
 {
     destroy_bitmap(bmp);
-    world->DestroyBody(body);
+    getWorld()->DestroyBody(body);
 }
 
 void Bomb::checkFuse(void)
@@ -23,6 +23,7 @@ void Bomb::checkFuse(void)
 
 void Bomb::blowUp(void)
 {
+    b2World *world = getWorld();
     int bodyCount = world->GetBodyCount() - 1;
     for (b2Body* b = world->GetBodyList(); bodyCount > 0; b = b->GetNext(), bodyCount--)
     {

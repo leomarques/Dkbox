@@ -1,3 +1,10 @@
+r11 (29/01/2010):
+- Implemented FreeDraw with images (still buggy) and satisfactory algorithm for eliminating redundant vertices.
+
+Tools versions:
+- Allegro 4.4.0.1
+- Code::Blocks nightly builds.
+
 r10 (03/01/2010):
 - Added World class which incorporated BodyManager.
 - Added Body class, Bomb now inherits from it.

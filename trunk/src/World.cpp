@@ -9,30 +9,29 @@ World::World(void)
     world = new b2World(worldAABB, b2Vec2(0.0f, -10.0f), true);
 
     world->SetBoundaryListener(new BoundaryListener());
-    debugDraw = new DebugDraw();
 
-    debugDrawOn = staticModeOn = false;
+    staticModeOn = false;
     simulateOn = true;
 }
 
 World::~World(void)
 {
     destroyAllBodies();
-    delete debugDraw;
     delete world;
 }
 
 void World::simulate(void)
 {
-    if (!simulateOn) return;
+    if (!simulateOn)
+        return;
+
     world->Step(TIMESTEP, ITERATIONS);
     afterStepChecks();
 }
 
-void World::toggleDebugDraw(void)
+void World::setDebugDraw(DebugDraw *debugDraw)
 {
-    world->SetDebugDraw(debugDrawOn ? NULL : debugDraw);
-    debugDrawOn = !debugDrawOn;
+    world->SetDebugDraw(debugDraw);
 }
 
 void World::toggleStaticMode(void)
@@ -62,7 +61,7 @@ bool World::makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions)
     body->CreateShape(&shapeDef);
     body->SetMassFromShapes();
 
-    Body *b = new Body(body, world, createBoxBitmap(dimensions));
+    Body *b = new Body(body, createBoxBitmap(dimensions));
     if (!b->bmp)
     {
         delete b;
@@ -92,7 +91,7 @@ bool World::makeCircle(const b2Vec2 coordinates, const float32 radius)
     body->CreateShape(&shapeDef);
     body->SetMassFromShapes();
 
-    Body *b = new Body(body, world, createCircleBitmap(radius, GREEN));
+    Body *b = new Body(body, createCircleBitmap(radius, GREEN));
     if (!b->bmp)
     {
         delete b;
@@ -122,7 +121,7 @@ bool World::makeBomb(const b2Vec2 coordinates)
     body->CreateShape(&shapeDef);
     body->SetMassFromShapes();
 
-    Bomb *b = new Bomb(body, world, createCircleBitmap(BOMBRADIUS, RED));
+    Bomb *b = new Bomb(body, createCircleBitmap(BOMBRADIUS, RED));
     if (!b->bmp)
     {
         delete b;
@@ -134,6 +133,38 @@ bool World::makeBomb(const b2Vec2 coordinates)
     return true;
 }
 
+Body* World::makeBody(vector<Point> points)
+{
+    if (world->GetBodyCount() > MAXBODIES || (int) points.size() < 3) return NULL;
+
+    b2BodyDef bodyDef;
+    b2Body* body = world->CreateBody(&bodyDef);
+
+    b2PolygonDef shapeDef;
+    if (!staticModeOn) shapeDef.density = DENSITY;
+    shapeDef.friction = FRICTION;
+    shapeDef.restitution = BOXRESTITUTION;
+
+    float32 x[1 << 9], y[1 << 9];
+    for (int i = 0; i < (int) points.size(); i++)
+    {
+        b2Vec2 c = coordAllegToB2(Point(points[i].x, points[i].y));
+        x[i] = c.x;
+        y[i] = c.y;
+    }
+
+    b2Polygon pgon(x, y, (int) points.size());
+
+    DecomposeConvexAndAddTo(&pgon, body, &shapeDef);
+
+    body->SetMassFromShapes();
+
+    Body *b = new Body(body);
+    bodyList.push_back(b);
+
+    return b;
+}
+
 void World::destroyBody(Body *body)
 {
     vector<Body*>::iterator it = find(bodyList.begin(), bodyList.end(), body);
@@ -143,8 +174,7 @@ void World::destroyBody(Body *body)
 
 void World::destroyLastBody(void)
 {
-    if (bodyList.empty()) return;
-    destroyBody(bodyList.back());
+    if (!bodyList.empty()) destroyBody(bodyList.back());
 }
 
 void World::destroyAllBodies(void)

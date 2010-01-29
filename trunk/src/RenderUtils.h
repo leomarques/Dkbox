@@ -3,6 +3,7 @@
 
 #include <Allegro.h>
 #include <Box2D.h>
+
 #include "MathUtils.h"
 
 #define RED makecol(255, 0, 0)
@@ -10,7 +11,6 @@
 #define BLUE makecol(0, 0, 255)
 #define YELLOW makecol(255, 255, 0)
 #define PURPLE makecol(225, 0, 220)
-#define LPURPLE makecol(165, 0, 220)
 #define WHITE makecol(255, 255, 255)
 #define GRAY makecol(180, 180, 180)
 #define TRANSPARENT makecol(255, 0, 255)
@@ -28,6 +28,14 @@ inline void drawLine(BITMAP *bmp, Point p0, Point p1, int color)
 inline void drawCircle(BITMAP *bmp, Point p, int radius, int color)
 {
     circle(bmp, p.x, p.y, radius, color);
+}
+
+inline BITMAP* makeBitmap(int x, int y, int color)
+{
+    BITMAP *b = create_bitmap(x, y);
+    if (!b) return NULL;
+    clear_to_color(b, color);
+    return b;
 }
 
 #endif // RENDERUTILS_H_INCLUDED
