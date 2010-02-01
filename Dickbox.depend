@@ -30,7 +30,7 @@
 1263859723 d:\programacao\dickbox\src\mathutils.h
 	<cmath>
 
-1264789466 d:\programacao\dickbox\src\engine.h
+1265053925 d:\programacao\dickbox\src\engine.h
 	<Allegro.h>
 	<time.h>
 	"Game.h"
@@ -85,7 +85,7 @@
 1264793473 source:d:\programacao\dickbox\src\renderutils.cpp
 	"RenderUtils.h"
 
-1264792942 source:d:\programacao\dickbox\src\stage.cpp
+1265053582 source:d:\programacao\dickbox\src\stage.cpp
 	"Stage.h"
 
 1264789984 source:d:\programacao\dickbox\src\world.cpp
@@ -94,7 +94,7 @@
 1264712343 source:d:\programacao\dickbox\src\main.cpp
 	"Engine.h"
 
-1264791192 d:\programacao\dickbox\src\freedraw.h
+1265052088 d:\programacao\dickbox\src\freedraw.h
 	<Allegro.h>
 	<vector>
 	<algorithm>
@@ -104,7 +104,7 @@
 	"RenderUtils.h"
 	"GameUtils.h"
 
-1264804629 source:d:\programacao\dickbox\src\freedraw.cpp
+1265053692 source:d:\programacao\dickbox\src\freedraw.cpp
 	"FreeDraw.h"
 
 1262298526 source:d:\programacao\dickbox\res\icon.rc
