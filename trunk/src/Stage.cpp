@@ -11,7 +11,6 @@ Stage::Stage()
     bmpDrawOn = true;
     dt = counter;
     setMouseLock(false);
-    //toggleDebugDraw();
 
     createGround();
 }

@@ -1,3 +1,6 @@
+r13 (01/02/2010):
+- Freedraw bitmap bug fixed.
+
 r12 (29/01/2010):
 - Forgot to commit FreeDraw code.
 

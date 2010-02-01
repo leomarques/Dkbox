@@ -20,23 +20,18 @@ void FreeDraw::resetLG(void)
     great.y = -INF;
 }
 
-void FreeDraw::addPoint(Point p)
+void FreeDraw::takePoint(Point p)
 {
+    On = true;
+
     least.x = min(least.x, p.x);
     least.y = min(least.y, p.y);
     great.x = max(great.x, p.x);
     great.y = max(great.y, p.y);
 
-    points.push_back(p);
-}
-
-void FreeDraw::takePoint(Point p)
-{
-    On = true;
-
     if (points.empty())
     {
-        addPoint(p);
+        points.push_back(p);
         lastPoint = p;
         return;
     }
@@ -49,19 +44,19 @@ void FreeDraw::takePoint(Point p)
 
     if (points.size() == 1)
     {
-        addPoint(p);
+        points.push_back(p);
         return;
     }
 
     Point p0 = points[(int) points.size() - 2] - points.back();
     Point p1 = p - points.back();
 
-    if (vecsCos(p0, p1) < - 0.98)
+    if (vecsCos(p0, p1) < - 0.96)
     {
         points.pop_back();
     }
 
-    addPoint(p);
+    points.push_back(p);
 }
 
 bool FreeDraw::makeBody(World *world)
@@ -82,7 +77,9 @@ bool FreeDraw::makeBody(World *world)
 
     int l = com.x - least.x, r = great.x - com.x,
     u = com.y - least.y, d = great.y - com.y,
-    w = great.x - least.x + 1, h = great.y - least.y + 1;
+    w = great.x - least.x, h = great.y - least.y;
+
+    l++; r++; u++; d++; w++; h++;
 
     BITMAP *bodyBmp;
 
@@ -90,12 +87,12 @@ bool FreeDraw::makeBody(World *world)
     {
         if (u >= d)
         {
-            bodyBmp = makeBitmap(l * 2 + 1, u * 2 + 1, TRANSPARENT);
+            bodyBmp = makeBitmap(l * 2, u * 2, TRANSPARENT);
             blit(bmp, bodyBmp, least.x, least.y, 0, 0, w, h);
         }
         else
         {
-            bodyBmp = makeBitmap(l * 2 + 1, d * 2 + 1, TRANSPARENT);
+            bodyBmp = makeBitmap(l * 2, d * 2, TRANSPARENT);
             blit(bmp, bodyBmp, least.x, least.y, 0, (bodyBmp->h / 2) - (com.y - least.y), w, h);
         }
     }
@@ -103,12 +100,12 @@ bool FreeDraw::makeBody(World *world)
     {
         if (u >= d)
         {
-            bodyBmp = makeBitmap(r * 2 + 1, u * 2 + 1, TRANSPARENT);
+            bodyBmp = makeBitmap(r * 2, u * 2, TRANSPARENT);
             blit(bmp, bodyBmp, least.x, least.y, (bodyBmp->w / 2) - (com.x - least.x), 0, w, h);
         }
         else
         {
-            bodyBmp = makeBitmap(r * 2 + 1, d * 2 + 1, TRANSPARENT);
+            bodyBmp = makeBitmap(r * 2, d * 2, TRANSPARENT);
             blit(bmp, bodyBmp, least.x, least.y, (bodyBmp->w / 2) - (com.x - least.x), (bodyBmp->h / 2) - (com.y - least.y), w, h);
         }
     }

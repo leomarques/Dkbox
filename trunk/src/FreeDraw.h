@@ -32,7 +32,6 @@ private:
     Point lastPoint, least, great;
     vector<Point> points;
 
-    void addPoint(Point p);
     void resetLG(void);
 };
 
