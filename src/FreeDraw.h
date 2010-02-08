@@ -32,7 +32,7 @@ private:
     Point lastPoint, least, great;
     vector<Point> points;
 
-    void resetLG(void);
+    void reset(void);
 };
 
 #endif // FREEDRAW_H
