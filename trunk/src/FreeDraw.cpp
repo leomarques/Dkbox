@@ -4,20 +4,12 @@ FreeDraw::FreeDraw(void)
 {
     On = false;
     bmp = makeBitmap(SCREEN_W, SCREEN_H, TRANSPARENT);
-    resetLG();
+    reset();
 }
 
 FreeDraw::~FreeDraw()
 {
     destroy_bitmap(bmp);
-}
-
-void FreeDraw::resetLG(void)
-{
-    least.x = INF;
-    least.y = INF;
-    great.x = -INF;
-    great.y = -INF;
 }
 
 void FreeDraw::takePoint(Point p)
@@ -39,7 +31,7 @@ void FreeDraw::takePoint(Point p)
     drawLine(bmp, p, lastPoint, GREEN);
     lastPoint = p;
 
-    if (pointDistance(p, points.back()) < 30)
+    if (pointDistance(p, points.back()) < 10)
         return;
 
     if (points.size() == 1)
@@ -51,12 +43,23 @@ void FreeDraw::takePoint(Point p)
     Point p0 = points[(int) points.size() - 2] - points.back();
     Point p1 = p - points.back();
 
-    if (vecsCos(p0, p1) < - 0.96)
+    if (vecsCos(p0, p1) < - 0.98)
     {
         points.pop_back();
     }
 
     points.push_back(p);
+}
+
+void FreeDraw::reset(void)
+{
+    least.x = INF;
+    least.y = INF;
+    great.x = -INF;
+    great.y = -INF;
+
+    points.clear();
+    clear_to_color(bmp, TRANSPARENT);
 }
 
 bool FreeDraw::makeBody(World *world)
@@ -65,13 +68,17 @@ bool FreeDraw::makeBody(World *world)
 
     if ((int) points.size() < 3)
     {
-        points.clear();
-        clear_to_color(bmp, TRANSPARENT);
-        resetLG();
+        reset();
         return false;
     }
 
     Body *b = world->makeBody(points);
+
+    if (!b)
+    {
+        reset();
+        return false;
+    }
 
     Point com = b->getAllegPosition();
 
@@ -112,9 +119,7 @@ bool FreeDraw::makeBody(World *world)
 
     b->bmp = bodyBmp;
 
-    points.clear();
-    resetLG();
-    clear_to_color(bmp, TRANSPARENT);
+    reset();
 
     return true;
 }

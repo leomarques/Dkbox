@@ -148,9 +148,8 @@ Body* World::makeBody(vector<Point> points)
     float32 x[1 << 9], y[1 << 9];
     for (int i = 0; i < (int) points.size(); i++)
     {
-        b2Vec2 c = coordAllegToB2(Point(points[i].x, points[i].y));
-        x[i] = c.x;
-        y[i] = c.y;
+        x[i] = coordXAllegToB2(points[i].x);
+        y[i] = coordYAllegToB2(points[i].y);
     }
 
     b2Polygon pgon(x, y, (int) points.size());

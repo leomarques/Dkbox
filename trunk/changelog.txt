@@ -1,3 +1,6 @@
+r14 (08/02/2010):
+- FreeDraw algorithm improved.
+
 r13 (01/02/2010):
 - Freedraw bitmap bug fixed.
 
