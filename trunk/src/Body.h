@@ -34,10 +34,10 @@ public:
     ~Body(void)
     {
         destroy_bitmap(bmp);
-        getWorld()->DestroyBody(body);
+        getB2World()->DestroyBody(body);
     }
 
-    b2World* getWorld(void)
+    b2World* getB2World(void)
     {
         return body->GetWorld();
     }
@@ -50,6 +50,16 @@ public:
     Point getAllegPosition(void)
     {
         return coordB2ToAlleg(getB2Position());
+    }
+
+    float32 getB2Angle(void)
+    {
+        return body->GetAngle();
+    }
+
+    fixed getAllegAngle(void)
+    {
+        return angleB2ToAlleg(getB2Angle());
     }
 
     bool operator==(Body *b)

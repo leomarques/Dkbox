@@ -6,7 +6,7 @@ Stage::Stage()
     debugDraw = new DebugDraw(buffer);
     freeDraw = new FreeDraw();
 
-    bodyType = _FreeDraw;
+    bodyType = Free_Draw;
     debugDrawOn = false;
     bmpDrawOn = true;
     dt = counter;
@@ -28,7 +28,8 @@ bool Stage::step(void)
 
     menuOn = false;
 
-    if (keys[KEYESC]) return false;
+    if (keys[KEYESC])
+        return false;
 
     if (mouse[0])
     {
@@ -49,7 +50,7 @@ bool Stage::step(void)
             world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), RANDBODYSIZE);
             break;
 
-        case _FreeDraw:
+        case Free_Draw:
             freeDraw->takePoint(Point(mouse_x, mouse_y));
             break;
         }
@@ -57,9 +58,7 @@ bool Stage::step(void)
     else
     {
         if (freeDraw->On)
-        {
             freeDraw->makeBody(world);
-        }
     }
 
     if (mouse[1])
@@ -76,7 +75,7 @@ bool Stage::step(void)
 
     if (keys[KEY4])
     {
-        bodyType = _FreeDraw;
+        bodyType = Free_Draw;
         setMouseLock(false);
     }
 
@@ -93,7 +92,7 @@ bool Stage::step(void)
         world->toggleSimulation();
 
     if (keys[KEY9])
-        if (bodyType != _FreeDraw)
+        if (bodyType != Free_Draw)
             toggleMouseLock();
 
     if (keys[KEY0])
@@ -137,19 +136,18 @@ void Stage::render(void)
         {
             Body *b = *it;
             BITMAP *bmp = b->bmp;
-            if (!bmp) continue;
+            if (!bmp)
+                continue;
 
             Point p = b->getAllegPosition();
             int x = p.x - (bmp->w / 2);
             int y = p.y - (bmp->h / 2);
 
-            rotate_sprite(buffer, bmp, x, y, fixmul(ftofix(- b->body->GetAngle()), radtofix_r));
+            rotate_sprite(buffer, bmp, x, y, b->getAllegAngle());
         }
 
     if (freeDraw->On)
-    {
         draw_sprite(buffer, freeDraw->bmp, 0, 0);
-    }
 
     /*************************************************************************************************/
     // TODO: Bind this.
@@ -170,8 +168,8 @@ void Stage::render(void)
         textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Circle");
         break;
 
-    case _FreeDraw:
-        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "FreeDraw");
+    case Free_Draw:
+        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Free Draw");
         break;
 
     default:
@@ -179,12 +177,16 @@ void Stage::render(void)
     }
 
     textprintf_ex(buffer, font, 200, 15, GRAY, -1, "Static mode:");
-    if (world->staticModeOn) textprintf_ex(buffer, font, 310, 15, GREEN, -1, "On");
-    else textprintf_ex(buffer, font, 310, 15, RED, -1, "Off");
+    if (world->staticModeOn)
+        textprintf_ex(buffer, font, 310, 15, GREEN, -1, "On");
+    else
+        textprintf_ex(buffer, font, 310, 15, RED, -1, "Off");
 
     textprintf_ex(buffer, font, 400, 15, GRAY, -1, "Mouse lock:");
-    if (mouseLockOn) textprintf_ex(buffer, font, 500, 15, GREEN, -1, "On");
-    else textprintf_ex(buffer, font, 500, 15, RED, -1, "Off");
+    if (mouseLockOn)
+        textprintf_ex(buffer, font, 500, 15, GREEN, -1, "On");
+    else
+        textprintf_ex(buffer, font, 500, 15, RED, -1, "Off");
 
     if (!world->simulateOn)
         textprintf_centre_ex(buffer, font, SCREEN_W / 2, 65, YELLOW, -1, "PAUSED");
@@ -248,9 +250,7 @@ void Stage::pyramidShow(void)
     {
         float32 xl = x;
         for (int j = 0; j < i; j++, xl += (size * 2))
-        {
             world->makeBox(b2Vec2(xl, y), b2Vec2(size, size));
-        }
     }
 
     world->makeBomb(b2Vec2(-0.5f, 0.3f));

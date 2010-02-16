@@ -15,11 +15,7 @@ public:
         x = y = 0;
     }
 
-    Point(int _x, int _y)
-    {
-        x = _x;
-        y = _y;
-    }
+    Point(int x, int y) : x(x), y(y) {}
 
     void operator=(Point p)
     {
@@ -35,8 +31,12 @@ public:
 
 inline int myPow(int x, int p)
 {
-    if (p == 0) return 1;
-    for (int i = 1; i < p; i++) x *= x;
+    if (p == 0)
+        return 1;
+
+    for (int i = 1; i < p; i++)
+		x *= x;
+
     return x;
 }
 

@@ -46,7 +46,8 @@ void World::toggleSimulation(void)
 
 bool World::makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions)
 {
-    if (world->GetBodyCount() > MAXBODIES) return false;
+    if (world->GetBodyCount() > MAXBODIES)
+        return false;
 
     b2BodyDef bodyDef;
     bodyDef.position.Set(coordinates.x, coordinates.y);
@@ -54,7 +55,8 @@ bool World::makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions)
 
     b2PolygonDef shapeDef;
     shapeDef.SetAsBox(dimensions.x, dimensions.y);
-    if (!staticModeOn) shapeDef.density = DENSITY;
+    if (!staticModeOn)
+		shapeDef.density = DENSITY;
     shapeDef.friction = FRICTION;
     shapeDef.restitution = BOXRESTITUTION;
 
@@ -75,7 +77,8 @@ bool World::makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions)
 
 bool World::makeCircle(const b2Vec2 coordinates, const float32 radius)
 {
-    if (world->GetBodyCount() > MAXBODIES) return false;
+    if (world->GetBodyCount() > MAXBODIES)
+        return false;
 
     b2BodyDef bodyDef;
     bodyDef.angularDamping = ANGULARDAMPING;
@@ -84,7 +87,8 @@ bool World::makeCircle(const b2Vec2 coordinates, const float32 radius)
 
     b2CircleDef shapeDef;
     shapeDef.radius = radius;
-    if (!staticModeOn) shapeDef.density = DENSITY;
+    if (!staticModeOn)
+		shapeDef.density = DENSITY;
     shapeDef.friction = FRICTION;
     shapeDef.restitution = CIRCRESTITUTION;
 
@@ -105,7 +109,8 @@ bool World::makeCircle(const b2Vec2 coordinates, const float32 radius)
 
 bool World::makeBomb(const b2Vec2 coordinates)
 {
-    if (world->GetBodyCount() > MAXBODIES) return false;
+    if (world->GetBodyCount() > MAXBODIES)
+        return false;
 
     b2BodyDef bodyDef;
     bodyDef.angularDamping = ANGULARDAMPING;
@@ -114,7 +119,8 @@ bool World::makeBomb(const b2Vec2 coordinates)
 
     b2CircleDef shapeDef;
     shapeDef.radius = BOMBRADIUS;
-    if (!staticModeOn) shapeDef.density = DENSITY;
+    if (!staticModeOn)
+		shapeDef.density = DENSITY;
     shapeDef.friction = FRICTION;
     shapeDef.restitution = CIRCRESTITUTION;
 
@@ -135,13 +141,15 @@ bool World::makeBomb(const b2Vec2 coordinates)
 
 Body* World::makeBody(vector<Point> points)
 {
-    if (world->GetBodyCount() > MAXBODIES || (int) points.size() < 3) return NULL;
+    if (world->GetBodyCount() > MAXBODIES || (int) points.size() < 3)
+        return NULL;
 
     b2BodyDef bodyDef;
     b2Body* body = world->CreateBody(&bodyDef);
 
     b2PolygonDef shapeDef;
-    if (!staticModeOn) shapeDef.density = DENSITY;
+    if (!staticModeOn)
+		shapeDef.density = DENSITY;
     shapeDef.friction = FRICTION;
     shapeDef.restitution = BOXRESTITUTION;
 
@@ -173,15 +181,14 @@ void World::destroyBody(Body *body)
 
 void World::destroyLastBody(void)
 {
-    if (!bodyList.empty()) destroyBody(bodyList.back());
+    if (!bodyList.empty())
+		destroyBody(bodyList.back());
 }
 
 void World::destroyAllBodies(void)
 {
     while (!bodyList.empty())
-    {
-        destroyLastBody();
-    }
+		destroyLastBody();
 }
 
 void World::afterStepChecks(void)
@@ -189,8 +196,10 @@ void World::afterStepChecks(void)
     queue<Body*> purgatory;
     for (vector<Body*>::iterator it = bodyList.begin(); it != bodyList.end(); ++it)
     {
-        if ((*it)->isBomb) ((Bomb*) (*it))->checkFuse();
-        if ((*it)->markedForDeletion) purgatory.push(*it);
+        if ((*it)->isBomb)
+			((Bomb*) (*it))->checkFuse();
+        if ((*it)->markedForDeletion)
+			purgatory.push(*it);
     }
 
     while (!purgatory.empty())

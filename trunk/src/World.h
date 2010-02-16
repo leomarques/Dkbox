@@ -7,17 +7,15 @@
 #include <queue>
 #include <algorithm>
 
+using namespace std;
+
 #include "RenderUtils.h"
+#include "GameUtils.h"
 #include "MathUtils.h"
 #include "DebugDraw.h"
 #include "Body.h"
 #include "Bomb.h"
 #include "FreeDraw.h"
-
-using namespace std;
-
-#define TIMESTEP 1.0f / 60.0f
-#define ITERATIONS 10
 
 #define DENSITY 1.0f
 #define FRICTION 0.3f

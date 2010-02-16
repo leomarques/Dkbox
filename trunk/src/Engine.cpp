@@ -27,17 +27,20 @@ void init(void)
 
     if (ustricmp(get_config_string(NULL, "fullscreen", "false"), "true") == 0)
     {
-        if (set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, resX, resY, 0, 0)) abortOnError();
+        if (set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, resX, resY, 0, 0))
+            abortOnError();
     }
     else
     {
-        if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, resX, resY, 0, 0)) abortOnError();
+        if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, resX, resY, 0, 0))
+            abortOnError();
     }
 
     pop_config_state();
 
     buffer = create_bitmap(SCREEN_W, SCREEN_H);
-    if (!buffer) exit(-2);
+    if (!buffer)
+        exit(-2);
     clear_bitmap(buffer);
 
     set_window_title(WINTITLE);
@@ -63,7 +66,8 @@ void playGame(void)
     {
         if (counter >= fpsControl)
         {
-            if (!gameStep()) return;
+            if (!gameStep())
+                return;
             gameRender();
 
             fpsControl = counter + 1;

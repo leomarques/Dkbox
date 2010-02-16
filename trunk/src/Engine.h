@@ -4,8 +4,8 @@
 #define DEFAULTRESX 800
 #define DEFAULTRESY 600
 #define DEFAULTCOLORDEPTH 32
-#define WINTITLE "Dickbox by LeoDick - rev13"
 #define FPS 60
+#define WINTITLE "Dickbox"
 
 #include <Allegro.h>
 #include <time.h>
