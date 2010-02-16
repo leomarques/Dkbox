@@ -61,7 +61,6 @@
 		<Unit filename="src\Input.cpp" />
 		<Unit filename="src\Input.h" />
 		<Unit filename="src\MathUtils.h" />
-		<Unit filename="src\RenderUtils.cpp" />
 		<Unit filename="src\RenderUtils.h" />
 		<Unit filename="src\Stage.cpp" />
 		<Unit filename="src\Stage.h" />

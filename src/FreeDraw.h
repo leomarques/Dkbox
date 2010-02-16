@@ -1,8 +1,6 @@
 #ifndef FREEDRAW_H
 #define FREEDRAW_H
 
-#define INF 0x3f3f3f3f
-
 #include <Allegro.h>
 #include <vector>
 #include <algorithm>
@@ -12,6 +10,10 @@
 #include "Body.h"
 #include "RenderUtils.h"
 #include "GameUtils.h"
+
+#define MINFIRSTDIST 10
+#define MINCOS -0.98
+#define CLOSEPOLYDIST 100
 
 class World;
 using namespace std;
@@ -29,7 +31,7 @@ public:
     bool makeBody(World *world);
 
 private:
-    Point lastPoint, least, great;
+    Point first, last, least, great;
     vector<Point> points;
 
     void reset(void);

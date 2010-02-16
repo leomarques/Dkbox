@@ -1,40 +1,56 @@
 #include "Input.h"
 
 bool keys[NKEYS];
-Key _keys[NKEYS];
 bool mouse[2];
+
+Key _keys[NKEYS];
 Mouse _mouse[2];
 
 bool mouseLockOn;
 
-void inputInit(void)
+void initKeys(void)
 {
     for (int i = 0; i < 10; i++)
-    {
         _keys[i] = Key(&key[i + 27]);
-    }
 
     _keys[KEYD] = Key(&key[KEY_D]);
     _keys[KEYESC] = Key(&key[KEY_ESC]);
     _keys[KEYTAB] = Key(&key[KEY_TAB]);
 
+    setKeyLock(KEYTAB, false);
+}
+
+void initMouse(void)
+{
     _mouse[0] = Mouse(1);
     _mouse[1] = Mouse(2);
 
     mouseLockOn = false;
+}
 
-    setKeyLock(KEYTAB, false);
+void updateKeys(void)
+{
+    for (int i = 0; i < NKEYS; i++)
+        keys[i] = _keys[i].isPressed();
+}
+
+void updateMouse(void)
+{
+    mouse[0] = _mouse[0].isPressed();
+    mouse[1] = _mouse[1].isPressed();
+}
+
+void inputInit(void)
+{
+    initKeys();
+    initMouse();
+    updateInput();
 }
 
 void updateInput(void)
 {
-    for (int i = 0; i < NKEYS; i++)
-    {
-        keys[i] = _keys[i].isPressed();
-    }
-
-    mouse[0] = _mouse[0].isPressed();
-    mouse[1] = _mouse[1].isPressed();
+    updateKeys();
+    updateMouse();
 }
 
 Key::Key(volatile char *end)

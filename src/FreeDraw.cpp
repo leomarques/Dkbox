@@ -4,10 +4,12 @@ FreeDraw::FreeDraw(void)
 {
     On = false;
     bmp = makeBitmap(SCREEN_W, SCREEN_H, TRANSPARENT);
+    if (!bmp)
+        exit(-2);
     reset();
 }
 
-FreeDraw::~FreeDraw()
+FreeDraw::~FreeDraw(void)
 {
     destroy_bitmap(bmp);
 }
@@ -24,14 +26,15 @@ void FreeDraw::takePoint(Point p)
     if (points.empty())
     {
         points.push_back(p);
-        lastPoint = p;
+        first = p;
+        last = first;
         return;
     }
 
-    drawLine(bmp, p, lastPoint, GREEN);
-    lastPoint = p;
+    drawLine(bmp, p, last, GREEN);
+    last = p;
 
-    if (pointDistance(p, points.back()) < 10)
+    if (pointDistance(p, points.back()) < MINFIRSTDIST)
         return;
 
     if (points.size() == 1)
@@ -43,10 +46,8 @@ void FreeDraw::takePoint(Point p)
     Point p0 = points[(int) points.size() - 2] - points.back();
     Point p1 = p - points.back();
 
-    if (vecsCos(p0, p1) < - 0.98)
-    {
+    if (vecsCos(p0, p1) < MINCOS)
         points.pop_back();
-    }
 
     points.push_back(p);
 }
@@ -66,7 +67,7 @@ bool FreeDraw::makeBody(World *world)
 {
     On = false;
 
-    if ((int) points.size() < 3)
+    if ((int) points.size() < 3 || pointDistance(first, last) > CLOSEPOLYDIST)
     {
         reset();
         return false;

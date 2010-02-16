@@ -29,7 +29,7 @@ private:
     bool menuOn, debugDrawOn, bmpDrawOn;
     volatile int dt;
 
-    enum BodyType { Random, Box, Circle, _FreeDraw };
+    enum BodyType { Random, Box, Circle, Free_Draw };
 
     BodyType bodyType;
 

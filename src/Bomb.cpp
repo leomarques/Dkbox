@@ -9,7 +9,7 @@ Bomb::Bomb(b2Body *body, BITMAP *bmp) : Body(body, bmp)
 Bomb::~Bomb(void)
 {
     destroy_bitmap(bmp);
-    getWorld()->DestroyBody(body);
+    getB2World()->DestroyBody(body);
 }
 
 void Bomb::checkFuse(void)
@@ -23,10 +23,13 @@ void Bomb::checkFuse(void)
 
 void Bomb::blowUp(void)
 {
-    b2World *world = getWorld();
+    b2World *world = getB2World();
     int bodyCount = world->GetBodyCount() - 1;
     for (b2Body* b = world->GetBodyList(); bodyCount > 0; b = b->GetNext(), bodyCount--)
     {
+        if (b == body)
+            continue;
+
         float32 dx = b->GetPosition().x - body->GetPosition().x;
         float32 dy = b->GetPosition().y - body->GetPosition().y;
         float32 dist = b2Vec2(dx, dy).Length();
