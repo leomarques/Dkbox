@@ -1,3 +1,9 @@
+Dickbox - code.google.com/p/dickbox
+by LeoDick - leommarques7@gmail.com
+
+r16 (22/02/2010)
+- Added Custom Box.
+
 r15 (16/02/2010):
 - Freedraw now rejects very open polygons.
 

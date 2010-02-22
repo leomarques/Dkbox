@@ -4,8 +4,6 @@ FreeDraw::FreeDraw(void)
 {
     On = false;
     bmp = makeBitmap(SCREEN_W, SCREEN_H, TRANSPARENT);
-    if (!bmp)
-        exit(-2);
     reset();
 }
 

@@ -27,6 +27,11 @@ public:
     {
         return Point(x - p.x, y - p.y);
     }
+
+    bool operator==(Point p)
+    {
+        return x == p.x && y == p.y;
+    }
 };
 
 inline int myPow(int x, int p)

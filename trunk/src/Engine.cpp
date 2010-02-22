@@ -39,8 +39,6 @@ void init(void)
     pop_config_state();
 
     buffer = create_bitmap(SCREEN_W, SCREEN_H);
-    if (!buffer)
-        exit(-2);
     clear_bitmap(buffer);
 
     set_window_title(WINTITLE);
@@ -80,7 +78,7 @@ void playGame(void)
 void abortOnError(void)
 {
     allegro_message("Error: %s =(", allegro_error);
-    exit(-1);
+    exit(1);
 }
 
 void closeButtonHandler(void)

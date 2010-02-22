@@ -44,10 +44,10 @@ void World::toggleSimulation(void)
     simulateOn = !simulateOn;
 }
 
-bool World::makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions)
+Body* World::makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions)
 {
     if (world->GetBodyCount() > MAXBODIES)
-        return false;
+        return NULL;
 
     b2BodyDef bodyDef;
     bodyDef.position.Set(coordinates.x, coordinates.y);
@@ -64,21 +64,16 @@ bool World::makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions)
     body->SetMassFromShapes();
 
     Body *b = new Body(body, createBoxBitmap(dimensions));
-    if (!b->bmp)
-    {
-        delete b;
-        return false;
-    }
 
     bodyList.push_back(b);
 
-    return true;
+    return b;
 }
 
-bool World::makeCircle(const b2Vec2 coordinates, const float32 radius)
+Body* World::makeCircle(const b2Vec2 coordinates, const float32 radius)
 {
     if (world->GetBodyCount() > MAXBODIES)
-        return false;
+        return NULL;
 
     b2BodyDef bodyDef;
     bodyDef.angularDamping = ANGULARDAMPING;
@@ -96,21 +91,16 @@ bool World::makeCircle(const b2Vec2 coordinates, const float32 radius)
     body->SetMassFromShapes();
 
     Body *b = new Body(body, createCircleBitmap(radius, GREEN));
-    if (!b->bmp)
-    {
-        delete b;
-        return false;
-    }
 
     bodyList.push_back(b);
 
-    return true;
+    return b;
 }
 
-bool World::makeBomb(const b2Vec2 coordinates)
+Body* World::makeBomb(const b2Vec2 coordinates)
 {
     if (world->GetBodyCount() > MAXBODIES)
-        return false;
+        return NULL;
 
     b2BodyDef bodyDef;
     bodyDef.angularDamping = ANGULARDAMPING;
@@ -128,15 +118,10 @@ bool World::makeBomb(const b2Vec2 coordinates)
     body->SetMassFromShapes();
 
     Bomb *b = new Bomb(body, createCircleBitmap(BOMBRADIUS, RED));
-    if (!b->bmp)
-    {
-        delete b;
-        return false;
-    }
 
     bodyList.push_back(b);
 
-    return true;
+    return b;
 }
 
 Body* World::makeBody(vector<Point> points)

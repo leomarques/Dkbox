@@ -14,6 +14,7 @@ void initKeys(void)
         _keys[i] = Key(&key[i + 27]);
 
     _keys[KEYD] = Key(&key[KEY_D]);
+    _keys[KEYP] = Key(&key[KEY_P]);
     _keys[KEYESC] = Key(&key[KEY_ESC]);
     _keys[KEYTAB] = Key(&key[KEY_TAB]);
 

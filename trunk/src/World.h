@@ -39,9 +39,9 @@ public:
     void toggleSimulation(void);
     void toggleStaticMode(void);
 
-    bool makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions);
-    bool makeCircle(const b2Vec2 coordinates, const float32 radius);
-    bool makeBomb(const b2Vec2 coordinates);
+    Body* makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions);
+    Body* makeCircle(const b2Vec2 coordinates, const float32 radius);
+    Body* makeBomb(const b2Vec2 coordinates);
     Body* makeBody(vector<Point> points);
 
     void destroyBody(Body *body);
