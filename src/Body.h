@@ -20,6 +20,7 @@ public:
         body->SetUserData(this);
         markedForDeletion = false;
         isBomb = false;
+		bmp = 0;
     }
 
     Body(b2Body *_body, BITMAP *_bmp)

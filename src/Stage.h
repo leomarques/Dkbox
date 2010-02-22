@@ -7,6 +7,7 @@
 #include "World.h"
 #include "DebugDraw.h"
 #include "FreeDraw.h"
+#include "CustomBox.h"
 #include "GameUtils.h"
 #include "MathUtils.h"
 #include "Input.h"
@@ -26,10 +27,11 @@ private:
     World *world;
     DebugDraw *debugDraw;
     FreeDraw *freeDraw;
+    CustomBox *customBox;
     bool menuOn, debugDrawOn, bmpDrawOn;
     volatile int dt;
 
-    enum BodyType { Random, Box, Circle, Free_Draw };
+    enum BodyType { Random, Box, Circle, Free_Draw, Custom_Box };
 
     BodyType bodyType;
 

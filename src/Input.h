@@ -16,7 +16,8 @@
 #define KEYD 10
 #define KEYESC 11
 #define KEYTAB 12
-#define NKEYS 13
+#define KEYP 13
+#define NKEYS 14
 
 extern bool keys[NKEYS];
 extern bool mouse[2];

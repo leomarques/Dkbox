@@ -5,6 +5,7 @@ Stage::Stage()
     world = new World();
     debugDraw = new DebugDraw(buffer);
     freeDraw = new FreeDraw();
+    customBox = new CustomBox();
 
     bodyType = Free_Draw;
     debugDrawOn = false;
@@ -18,6 +19,7 @@ Stage::Stage()
 Stage::~Stage()
 {
     delete freeDraw;
+    delete customBox;
     delete debugDraw;
     delete world;
 }
@@ -53,12 +55,18 @@ bool Stage::step(void)
         case Free_Draw:
             freeDraw->takePoint(Point(mouse_x, mouse_y));
             break;
+
+        case Custom_Box:
+            customBox->takePoint(Point(mouse_x, mouse_y));
+            break;
         }
     }
     else
     {
         if (freeDraw->On)
             freeDraw->makeBody(world);
+        if (customBox->On)
+            customBox->makeBody(world);
     }
 
     if (mouse[1])
@@ -80,7 +88,10 @@ bool Stage::step(void)
     }
 
     if (keys[KEY5])
-        pyramidShow();
+    {
+        bodyType = Custom_Box;
+        setMouseLock(false);
+    }
 
     if (keys[KEY6])
         world->destroyLastBody();
@@ -92,7 +103,7 @@ bool Stage::step(void)
         world->toggleSimulation();
 
     if (keys[KEY9])
-        if (bodyType != Free_Draw)
+        if (bodyType != Free_Draw && bodyType != Custom_Box)
             toggleMouseLock();
 
     if (keys[KEY0])
@@ -100,6 +111,9 @@ bool Stage::step(void)
         world->destroyAllBodies();
         createGround();
     }
+
+    if (keys[KEYP])
+        pyramidShow();
 
     if (keys[KEYTAB])
         menuOn = true;
@@ -149,6 +163,9 @@ void Stage::render(void)
     if (freeDraw->On)
         draw_sprite(buffer, freeDraw->bmp, 0, 0);
 
+    if (customBox->On)
+        draw_sprite(buffer, customBox->bmp, 0, 0);
+
     /*************************************************************************************************/
     // TODO: Bind this.
     textprintf_centre_ex(buffer, font, SCREEN_W / 2, 40, GREEN, -1, "Hold TAB for menu");
@@ -170,6 +187,10 @@ void Stage::render(void)
 
     case Free_Draw:
         textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Free Draw");
+        break;
+
+    case Custom_Box:
+        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Box");
         break;
 
     default:
@@ -210,7 +231,7 @@ textprintf_ex(buffer, font, 110, 65, fps < FPS ? fps < (FPS / 2) ? RED : YELLOW 
         textprintf_ex(buffer, font, 10, 120, BLUE, -1, "2 : Box");
         textprintf_ex(buffer, font, 10, 130, BLUE, -1, "3 : Circle");
         textprintf_ex(buffer, font, 10, 140, BLUE, -1, "4 : Free draw");
-        textprintf_ex(buffer, font, 10, 150, BLUE, -1, "5 : Pyramid");
+        textprintf_ex(buffer, font, 10, 150, BLUE, -1, "5 : Custom Box");
         textprintf_ex(buffer, font, 10, 160, BLUE, -1, "6 : Destroy last body");
         textprintf_ex(buffer, font, 10, 170, BLUE, -1, "7 : Toggle static mode");
         textprintf_ex(buffer, font, 10, 180, BLUE, -1, "8 : Pause");

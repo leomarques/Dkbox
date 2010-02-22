@@ -49,6 +49,8 @@
 		<Unit filename="src\Body.h" />
 		<Unit filename="src\Bomb.cpp" />
 		<Unit filename="src\Bomb.h" />
+		<Unit filename="src\CustomBox.cpp" />
+		<Unit filename="src\CustomBox.h" />
 		<Unit filename="src\DebugDraw.cpp" />
 		<Unit filename="src\DebugDraw.h" />
 		<Unit filename="src\Engine.cpp" />
