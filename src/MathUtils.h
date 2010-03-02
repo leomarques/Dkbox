@@ -36,13 +36,11 @@ public:
 
 inline int myPow(int x, int p)
 {
-    if (p == 0)
-        return 1;
+	int r = 1;
+    for (int i = 0; i < p; i++)
+        r *= x;
 
-    for (int i = 1; i < p; i++)
-		x *= x;
-
-    return x;
+    return r;
 }
 
 inline double pointDistance(Point p0, Point p1)
