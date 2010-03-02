@@ -1,6 +1,9 @@
 Dickbox - code.google.com/p/dickbox
 by LeoDick - leommarques7@gmail.com
 
+r17 (02/03/2010)
+- Fixed myPow().
+
 r16 (22/02/2010)
 - Added Custom Box.
 

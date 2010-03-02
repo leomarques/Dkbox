@@ -1,25 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="src\CustomBox.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="692" topLine="28" />
-	</File>
-	<File name="src\Engine.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="384" topLine="9" />
-	</File>
-	<File name="src\FreeDraw.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2335" topLine="86" />
-	</File>
-	<File name="src\RenderUtils.h" open="0" top="0" tabpos="0">
-		<Cursor position="988" topLine="30" />
-	</File>
-	<File name="src\Stage.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3168" topLine="139" />
-	</File>
-	<File name="src\Stage.h" open="0" top="0" tabpos="0">
-		<Cursor position="0" topLine="5" />
-	</File>
-	<File name="src\World.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3034" topLine="117" />
-	</File>
 </CodeBlocks_layout_file>
