@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="src\Body.h" open="0" top="0" tabpos="0">
+		<Cursor position="1040" topLine="22" />
+	</File>
+	<File name="src\Bomb.h" open="0" top="0" tabpos="0">
+		<Cursor position="52" topLine="0" />
+	</File>
+	<File name="src\CustomBox.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1136" topLine="11" />
+	</File>
+	<File name="src\Engine.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="13" topLine="0" />
+	</File>
+	<File name="src\Engine.h" open="0" top="0" tabpos="3">
+		<Cursor position="202" topLine="0" />
+	</File>
+	<File name="src\Game.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="12" topLine="0" />
+	</File>
+	<File name="src\Game.h" open="0" top="0" tabpos="5">
+		<Cursor position="94" topLine="0" />
+	</File>
+	<File name="src\GameUtils.h" open="0" top="0" tabpos="0">
+		<Cursor position="275" topLine="0" />
+	</File>
+	<File name="src\Input.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="327" topLine="81" />
+	</File>
+	<File name="src\Input.h" open="0" top="0" tabpos="0">
+		<Cursor position="472" topLine="0" />
+	</File>
+	<File name="src\RenderUtils.h" open="0" top="0" tabpos="0">
+		<Cursor position="892" topLine="15" />
+	</File>
+	<File name="src\Stage.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="483" topLine="0" />
+	</File>
+	<File name="src\Stage.h" open="0" top="0" tabpos="0">
+		<Cursor position="573" topLine="0" />
+	</File>
+	<File name="src\World.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1435" topLine="66" />
+	</File>
+	<File name="src\World.h" open="0" top="0" tabpos="0">
+		<Cursor position="501" topLine="7" />
+	</File>
+	<File name="src\main.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="161" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

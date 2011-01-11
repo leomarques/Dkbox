@@ -1,0 +1,78 @@
+Dickbox - code.google.com/p/dickbox
+by LeoDick - leommarques7@gmail.com
+
+r17 (02/03/2010)
+- Fixed myPow().
+
+r16 (22/02/2010)
+- Added Custom Box.
+
+r15 (16/02/2010):
+- Freedraw now rejects very open polygons.
+
+r14 (08/02/2010):
+- FreeDraw algorithm improved.
+
+r13 (01/02/2010):
+- Freedraw bitmap bug fixed.
+
+r12 (29/01/2010):
+- Forgot to commit FreeDraw code.
+
+r11 (29/01/2010):
+- Implemented FreeDraw with images (still buggy) and satisfactory algorithm for eliminating redundant vertices.
+
+Tools versions:
+- Allegro 4.4.0.1
+- Code::Blocks nightly builds.
+
+r10 (03/01/2010):
+- Added World class which incorporated BodyManager.
+- Added Body class, Bomb now inherits from it.
+- Added stage class.
+- New Input.
+- Removed "custom box" and "free draw" features, they'll be back on next rev.
+
+r9 (23/12/2009):
+- Implemented Free draw with concave polygons (no images).
+- Added MathUtils.h.
+- Deleted debug binary.
+
+r8 (21/12/2009):
+- Implemented DebugDraw.
+- Changed InputReader key control.
+- Added coord|XY|B2ToAlleg().
+
+r7 (25/11/2009):
+- SCALE is now a #define.
+- Convex decomposition(Box2D SVN r2) added to lib.
+- Added failing testConcave().
+- Removed libs paths inside Code::Blocks.
+- Added pyramid entrance.
+- Removed unnecessary show_mouse(NULL) from gameEnd().
+- Fixed RANDOM().
+
+r6 (06/11/2009):
+- Removed unnecessary check in timer function.
+- Binaries compiled with the recompiled libbox2d.a.
+
+r5 (31/10/2009):
+- Added some defines to remove hardcode.
+- Added RANDOM().
+
+r4 (24/10/2009):
+Initial features:
+- Random bodies.
+- Boxes.
+- Circles.
+- Bombs.
+- Custom boxes.
+- Static mode.
+- Pause.
+- Mouse lock.
+
+Tools versions:
+- Allegro 4.2.2.
+- Box2D 2.0.1.
+- Code::Blocks 8.02.
+Binaries compiled with MinGW (gcc 4.4.1 TDM-2) on Windows 7 32bits.
