@@ -53,6 +53,11 @@ public:
         return coordB2ToAlleg(getB2Position());
     }
 
+    float32 getMass(void)
+    {
+        return body->GetMass();
+    }
+
     float32 getB2Angle(void)
     {
         return body->GetAngle();

@@ -28,7 +28,7 @@ private:
     DebugDraw *debugDraw;
     FreeDraw *freeDraw;
     CustomBox *customBox;
-    bool menuOn, debugDrawOn, bmpDrawOn;
+    bool menuOn, debugDrawOn, bmpDrawOn, cleanModeOn;
     volatile int dt;
 
     enum BodyType { Random, Box, Circle, Free_Draw, Custom_Box };

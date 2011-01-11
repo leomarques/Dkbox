@@ -7,9 +7,10 @@ Stage::Stage()
     freeDraw = new FreeDraw();
     customBox = new CustomBox();
 
-    bodyType = Free_Draw;
+    bodyType = Random;
     debugDrawOn = false;
     bmpDrawOn = true;
+    cleanModeOn = true;
     dt = counter;
     setMouseLock(false);
 
@@ -118,6 +119,9 @@ bool Stage::step(void)
     if (keys[KEYTAB])
         menuOn = true;
 
+    if (keys[KEYH])
+        cleanModeOn = !cleanModeOn;
+
     if (keys[KEYD])
     {
         if (debugDrawOn)
@@ -149,6 +153,9 @@ void Stage::render(void)
         for (vector<Body*>::iterator it = world->bodyList.begin(); it != world->bodyList.end(); ++it)
         {
             Body *b = *it;
+            if (b->getMass() == 0)
+                continue;
+
             BITMAP *bmp = b->bmp;
             if (!bmp)
                 continue;
@@ -168,6 +175,7 @@ void Stage::render(void)
 
     /*************************************************************************************************/
     // TODO: Bind this.
+    if (!cleanModeOn) {
     textprintf_centre_ex(buffer, font, SCREEN_W / 2, 40, GREEN, -1, "Hold TAB for menu");
 
     textprintf_ex(buffer, font, 10, 15, GRAY, -1, "Body type:");
@@ -239,9 +247,11 @@ textprintf_ex(buffer, font, 110, 65, fps < FPS ? fps < (FPS / 2) ? RED : YELLOW 
         textprintf_ex(buffer, font, 10, 205, BLUE, -1, "MB1 : Make bodies");
         textprintf_ex(buffer, font, 10, 215, BLUE, -1, "MB2 : Make bombs");
     }
+    }
     /*************************************************************************************************/
 
-    draw_sprite(buffer, mouse_sprite, mouse_x, mouse_y);
+    //draw_sprite(buffer, mouse_sprite, mouse_x, mouse_y);
+    drawCircle(buffer, Point(mouse_x, mouse_y), 1, RED);
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     clear_bitmap(buffer);

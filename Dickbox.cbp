@@ -38,8 +38,8 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Linker>
-			<Add library="box2d" />
-			<Add library="alleg44.dll" />
+			<Add library="C:\MinGW32\lib\libBox2D(concave)last.a" />
+			<Add library="C:\MinGW32\lib\liballeg44.dll.a" />
 		</Linker>
 		<Unit filename="res\config.ini" />
 		<Unit filename="res\icon.rc">

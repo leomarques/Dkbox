@@ -58,7 +58,7 @@ bool CustomBox::makeBody(World *world)
         return false;
     }
 
-    b->bmp = createBoxBitmap(dimensions);
+    b->bmp = createBoxBitmap(dimensions, RANDOMCOLOR);
 
     reset();
 

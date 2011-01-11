@@ -63,7 +63,7 @@ Body* World::makeBox(const b2Vec2 coordinates, const b2Vec2 dimensions)
     body->CreateShape(&shapeDef);
     body->SetMassFromShapes();
 
-    Body *b = new Body(body, createBoxBitmap(dimensions));
+    Body *b = new Body(body, createBoxBitmap(dimensions, RANDOMCOLOR));
 
     bodyList.push_back(b);
 
@@ -90,7 +90,7 @@ Body* World::makeCircle(const b2Vec2 coordinates, const float32 radius)
     body->CreateShape(&shapeDef);
     body->SetMassFromShapes();
 
-    Body *b = new Body(body, createCircleBitmap(radius, GREEN));
+    Body *b = new Body(body, createCircleBitmap(radius, RANDOMCOLOR));
 
     bodyList.push_back(b);
 
