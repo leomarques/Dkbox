@@ -2,7 +2,7 @@
 #define WORLD_H_INCLUDED
 
 #include <Box2D.h>
-#include <Allegro.h>
+#include <allegro.h>
 #include <vector>
 #include <queue>
 #include <algorithm>
@@ -44,9 +44,14 @@ public:
     Body* makeBomb(const b2Vec2 coordinates);
     Body* makeBody(vector<Point> points);
 
+    void wakeUpAllBodies(void);
+    void setGravity(b2Vec2 gravity);
+
     void destroyBody(Body *body);
     void destroyLastBody(void);
+    void destroyLastNonStaticBody(void);
     void destroyAllBodies(void);
+    void destroyAllNonStaticBodies(void);
 
 private:
     b2World *world;

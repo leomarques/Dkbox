@@ -1,5 +1,5 @@
-#ifndef CUSTOMBOX_H
-#define CUSTOMBOX_H
+#ifndef CUSTOMCIRCLE_H
+#define CUSTOMCIRCLE_H
 
 #include <allegro.h>
 
@@ -9,14 +9,14 @@
 #include "RenderUtils.h"
 #include "GameUtils.h"
 
-class CustomBox
+class CustomCircle
 {
 public:
     BITMAP *bmp;
     bool On;
 
-    CustomBox(void);
-    ~CustomBox(void);
+    CustomCircle(void);
+    ~CustomCircle(void);
 
     void takePoint(Point p);
     bool makeBody(World *world);
@@ -28,4 +28,4 @@ private:
     float32 cleanSize(float32 f);
 };
 
-#endif // CUSTOMBOX_H
+#endif // CUSTOMCIRCLE_H

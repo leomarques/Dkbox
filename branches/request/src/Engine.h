@@ -7,7 +7,7 @@
 #define FPS 60
 #define WINTITLE "Dickbox"
 
-#include <Allegro.h>
+#include <allegro.h>
 #include <time.h>
 
 #include "Game.h"

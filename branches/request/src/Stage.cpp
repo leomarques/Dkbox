@@ -6,14 +6,25 @@ Stage::Stage()
     debugDraw = new DebugDraw(buffer);
     freeDraw = new FreeDraw();
     customBox = new CustomBox();
+    customCircle = new CustomCircle();
 
-    bodyType = Random;
     debugDrawOn = false;
+    smallBodiesOn = false;
+    cursorOn = true;
+    autoDumpOn = false;
     bmpDrawOn = true;
     cleanModeOn = true;
-    dt = counter;
-    setMouseLock(false);
 
+    dt = counter;
+
+    bodyType = Random;
+    gravity.x = 0.0f;
+    gravity.y = -10.0f;
+
+    bodiesSize = RANDBODYSIZE;
+    bodiesRadius = RANDHALFSIZE;
+
+    setMouseLock(false);
     createGround();
 }
 
@@ -21,6 +32,7 @@ Stage::~Stage()
 {
     delete freeDraw;
     delete customBox;
+    delete customCircle;
     delete debugDraw;
     delete world;
 }
@@ -34,23 +46,26 @@ bool Stage::step(void)
     if (keys[KEYESC])
         return false;
 
-    if (mouse[0])
+    if (mouse[0] or (autoDumpOn and (bodyType != Free_Draw and bodyType != Custom_Box and bodyType != Custom_Circle)))
     {
+        bodiesSize = smallBodiesOn ? SMALLBODYSIZE : RANDBODYSIZE;
+        bodiesRadius = smallBodiesOn ? SMALLHALFSIZE : RANDHALFSIZE;
+
         switch (bodyType)
         {
         case Random:
             if (RANDOM(0, 1))
-                world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
+                world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), bodiesSize);
             else
-                world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), RANDBODYSIZE);
+                world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), bodiesRadius);
             break;
 
         case Box:
-            world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
+            world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), bodiesSize);
             break;
 
         case Circle:
-            world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), RANDBODYSIZE);
+            world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), bodiesRadius);
             break;
 
         case Free_Draw:
@@ -60,6 +75,10 @@ bool Stage::step(void)
         case Custom_Box:
             customBox->takePoint(Point(mouse_x, mouse_y));
             break;
+
+        case Custom_Circle:
+            customCircle->takePoint(Point(mouse_x, mouse_y));
+            break;
         }
     }
     else
@@ -68,6 +87,8 @@ bool Stage::step(void)
             freeDraw->makeBody(world);
         if (customBox->On)
             customBox->makeBody(world);
+        if (customCircle->On)
+            customCircle->makeBody(world);
     }
 
     if (mouse[1])
@@ -122,6 +143,51 @@ bool Stage::step(void)
     if (keys[KEYH])
         cleanModeOn = !cleanModeOn;
 
+    if (keys[KEYA])
+        autoDumpOn = !autoDumpOn;
+
+    if (keys[KEYC])
+        cursorOn = !cursorOn;
+
+    if (keys[KEYX])
+    {
+        bodyType = Custom_Circle;
+        setMouseLock(false);
+    }
+
+    if (keys[KEYN])
+        world->destroyLastNonStaticBody();
+
+    if (keys[KEYM])
+        world->destroyAllNonStaticBodies();
+
+    if (keys[KEYS])
+        smallBodiesOn = !smallBodiesOn;
+
+    if (keys[KEYUP])
+    {
+        gravity.y += 2;
+        world->setGravity(gravity);
+    }
+
+    if (keys[KEYDOWN])
+    {
+        gravity.y -= 2;
+        world->setGravity(gravity);
+    }
+
+    if (keys[KEYLEFT])
+    {
+        gravity.x -= 2;
+        world->setGravity(gravity);
+    }
+
+    if (keys[KEYRIGHT])
+    {
+        gravity.x += 2;
+        world->setGravity(gravity);
+    }
+
     if (keys[KEYD])
     {
         if (debugDrawOn)
@@ -153,7 +219,7 @@ void Stage::render(void)
         for (vector<Body*>::iterator it = world->bodyList.begin(); it != world->bodyList.end(); ++it)
         {
             Body *b = *it;
-            if (b->getMass() == 0)
+            if (b->isStatic())
                 continue;
 
             BITMAP *bmp = b->bmp;
@@ -172,6 +238,9 @@ void Stage::render(void)
 
     if (customBox->On)
         draw_sprite(buffer, customBox->bmp, 0, 0);
+
+    if (customCircle->On)
+        draw_sprite(buffer, customCircle->bmp, 0, 0);
 
     /*************************************************************************************************/
     // TODO: Bind this.
@@ -201,6 +270,10 @@ void Stage::render(void)
         textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Box");
         break;
 
+    case Custom_Circle:
+        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Circle");
+        break;
+
     default:
         break;
     }
@@ -216,6 +289,8 @@ void Stage::render(void)
         textprintf_ex(buffer, font, 500, 15, GREEN, -1, "On");
     else
         textprintf_ex(buffer, font, 500, 15, RED, -1, "Off");
+
+    textprintf_ex(buffer, font, 600, 15, GRAY, -1, "Gravity: %.2f, %.2f", gravity.x, gravity.y);
 
     if (!world->simulateOn)
         textprintf_centre_ex(buffer, font, SCREEN_W / 2, 65, YELLOW, -1, "PAUSED");
@@ -246,12 +321,21 @@ textprintf_ex(buffer, font, 110, 65, fps < FPS ? fps < (FPS / 2) ? RED : YELLOW 
         textprintf_ex(buffer, font, 10, 190, BLUE, -1, "9 : Toggle Mouse lock");
         textprintf_ex(buffer, font, 10, 205, BLUE, -1, "MB1 : Make bodies");
         textprintf_ex(buffer, font, 10, 215, BLUE, -1, "MB2 : Make bombs");
+
+        textprintf_ex(buffer, font, 10, 235, BLUE, -1, "H : Hide all text");
+        textprintf_ex(buffer, font, 10, 245, BLUE, -1, "C : Toggle cursor");
+        textprintf_ex(buffer, font, 10, 255, BLUE, -1, "A : Auto dump bodies");
+        textprintf_ex(buffer, font, 10, 265, BLUE, -1, "N : Destroy last non-static body");
+        textprintf_ex(buffer, font, 10, 275, BLUE, -1, "M : Destroy all non-static body");
+        textprintf_ex(buffer, font, 10, 285, BLUE, -1, "S : Toggle small bodies");
+        textprintf_ex(buffer, font, 10, 295, BLUE, -1, "X : Custom circle");
+        textprintf_ex(buffer, font, 10, 305, BLUE, -1, "Arrow keys : Adjust gravity");
     }
     }
     /*************************************************************************************************/
 
-    //draw_sprite(buffer, mouse_sprite, mouse_x, mouse_y);
-    drawCircle(buffer, Point(mouse_x, mouse_y), 1, RED);
+    if (cursorOn)
+        draw_sprite(buffer, mouse_sprite, mouse_x, mouse_y);
 
     blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
     clear_bitmap(buffer);

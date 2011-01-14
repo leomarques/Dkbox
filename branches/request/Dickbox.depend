@@ -2,6 +2,8 @@
 1266282034 source:d:\programacao\dickbox\src\bomb.cpp
 	"Bomb.h"
 
+1264712343 
+
 1264786355 d:\programacao\dickbox\src\bomb.h
 	<Box2D.h>
 	<Allegro.h>
@@ -12,6 +14,8 @@
 	<Allegro.h>
 	"MathUtils.h"
 	"GameUtils.h"
+
+1294992586 .h"
 
 1264789212 source:d:\programacao\dickbox\src\debugdraw.cpp
 	"DebugDraw.h"
@@ -65,6 +69,8 @@
 	"Bomb.h"
 	"FreeDraw.h"
 
+1266807922 h"
+
 1266282015 d:\programacao\dickbox\src\gameutils.h
 	<Allegro.h>
 	<cmath>
@@ -74,6 +80,8 @@
 
 1266730577 d:\programacao\dickbox\src\input.h
 	<Allegro.h>
+
+1294993389 >
 
 1266807906 source:d:\programacao\dickbox\src\engine.cpp
 	"Engine.h"
@@ -86,6 +94,8 @@
 
 1264793473 source:d:\programacao\dickbox\src\renderutils.cpp
 	"RenderUtils.h"
+
+1264793473 ls.h"
 
 1266807393 source:d:\programacao\dickbox\src\stage.cpp
 	"Stage.h"
@@ -125,46 +135,46 @@
 1266285634 source:e:\dev\dickbox\src\bomb.cpp
 	"Bomb.h"
 
-1264789955 e:\dev\dickbox\src\bomb.h
+1294941069 e:\dev\dickbox\src\bomb.h
 	<Box2D.h>
-	<Allegro.h>
+	<allegro.h>
 	"Body.h"
 
-1294703071 e:\dev\dickbox\src\body.h
+1294992065 e:\dev\dickbox\src\body.h
 	<Box2D.h>
-	<Allegro.h>
+	<allegro.h>
 	"MathUtils.h"
 	"GameUtils.h"
 
 1267234674 e:\dev\dickbox\src\mathutils.h
 	<cmath>
 
-1266285615 e:\dev\dickbox\src\gameutils.h
-	<Allegro.h>
+1294997530 e:\dev\dickbox\src\gameutils.h
+	<allegro.h>
 	<cmath>
 	<time.h>
-	"RenderUtils.h"
 	"MathUtils.h"
 
-1294705070 e:\dev\dickbox\src\renderutils.h
-	<Allegro.h>
+1294997530 e:\dev\dickbox\src\renderutils.h
+	<allegro.h>
 	<Box2D.h>
 	"MathUtils.h"
+	"GameUtils.h"
 
 1294704219 source:e:\dev\dickbox\src\custombox.cpp
 	"CustomBox.h"
 
-1266737493 e:\dev\dickbox\src\custombox.h
-	<Allegro.h>
+1294941069 e:\dev\dickbox\src\custombox.h
+	<allegro.h>
 	"MathUtils.h"
 	"World.h"
 	"Body.h"
 	"RenderUtils.h"
 	"GameUtils.h"
 
-1266736493 e:\dev\dickbox\src\world.h
+1294992230 e:\dev\dickbox\src\world.h
 	<Box2D.h>
-	<Allegro.h>
+	<allegro.h>
 	<vector>
 	<queue>
 	<algorithm>
@@ -176,14 +186,14 @@
 	"Bomb.h"
 	"FreeDraw.h"
 
-1264792746 e:\dev\dickbox\src\debugdraw.h
+1294941069 e:\dev\dickbox\src\debugdraw.h
 	<Box2D.h>
-	<Allegro.h>
+	<allegro.h>
 	"RenderUtils.h"
 	"GameUtils.h"
 
-1266737554 e:\dev\dickbox\src\freedraw.h
-	<Allegro.h>
+1294941069 e:\dev\dickbox\src\freedraw.h
+	<allegro.h>
 	<vector>
 	<algorithm>
 	"MathUtils.h"
@@ -192,14 +202,14 @@
 	"RenderUtils.h"
 	"GameUtils.h"
 
-1264792812 source:e:\dev\dickbox\src\debugdraw.cpp
+1294995740 source:e:\dev\dickbox\src\debugdraw.cpp
 	"DebugDraw.h"
 
-1294701184 source:e:\dev\dickbox\src\engine.cpp
+1294996504 source:e:\dev\dickbox\src\engine.cpp
 	"Engine.h"
 
-1294701184 e:\dev\dickbox\src\engine.h
-	<Allegro.h>
+1294996520 e:\dev\dickbox\src\engine.h
+	<allegro.h>
 	<time.h>
 	"Game.h"
 	"Input.h"
@@ -207,20 +217,21 @@
 1294701184 e:\dev\dickbox\src\game.h
 	"Stage.h"
 
-1294702842 e:\dev\dickbox\src\stage.h
-	<Allegro.h>
+1294996877 e:\dev\dickbox\src\stage.h
+	<allegro.h>
 	<Box2D.h>
 	"World.h"
 	"DebugDraw.h"
 	"FreeDraw.h"
 	"CustomBox.h"
+	"CustomCircle.h"
 	"GameUtils.h"
 	"MathUtils.h"
 	"Input.h"
 	"Engine.h"
 
-1294702951 e:\dev\dickbox\src\input.h
-	<Allegro.h>
+1294993389 e:\dev\dickbox\src\input.h
+	<allegro.h>
 
 1266811522 source:e:\dev\dickbox\src\freedraw.cpp
 	"FreeDraw.h"
@@ -228,17 +239,290 @@
 1294701184 source:e:\dev\dickbox\src\game.cpp
 	"Game.h"
 
-1294703767 source:e:\dev\dickbox\src\world.cpp
+1294992200 source:e:\dev\dickbox\src\world.cpp
 	"World.h"
 
 1264712343 source:e:\dev\dickbox\src\main.cpp
 	"Engine.h"
 
-1294702951 source:e:\dev\dickbox\src\input.cpp
+1294993389 source:e:\dev\dickbox\src\input.cpp
 	"Input.h"
 
-1294704279 source:e:\dev\dickbox\src\stage.cpp
+1294997041 source:e:\dev\dickbox\src\stage.cpp
 	"Stage.h"
 
 1262298526 source:e:\dev\dickbox\res\icon.rc
+
+1266285634 source:/media/Stuff/dev/Dickbox/src/Bomb.cpp
+	"Bomb.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/Bomb.h
+	<Box2D.h>
+	<allegro.h>
+	"Body.h"
+
+1294992065 /media/Stuff/dev/Dickbox/src/Body.h
+	<Box2D.h>
+	<allegro.h>
+	"MathUtils.h"
+	"GameUtils.h"
+
+1267231074 /media/Stuff/dev/Dickbox/src/MathUtils.h
+	<cmath>
+
+1294941069 /media/Stuff/dev/Dickbox/src/GameUtils.h
+	<allegro.h>
+	<cmath>
+	<time.h>
+	"RenderUtils.h"
+	"MathUtils.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/RenderUtils.h
+	<allegro.h>
+	<Box2D.h>
+	"MathUtils.h"
+
+1294704219 source:/media/Stuff/dev/Dickbox/src/CustomBox.cpp
+	"CustomBox.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/CustomBox.h
+	<allegro.h>
+	"MathUtils.h"
+	"World.h"
+	"Body.h"
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1294992230 /media/Stuff/dev/Dickbox/src/World.h
+	<Box2D.h>
+	<allegro.h>
+	<vector>
+	<queue>
+	<algorithm>
+	"RenderUtils.h"
+	"GameUtils.h"
+	"MathUtils.h"
+	"DebugDraw.h"
+	"Body.h"
+	"Bomb.h"
+	"FreeDraw.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/DebugDraw.h
+	<Box2D.h>
+	<allegro.h>
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/FreeDraw.h
+	<allegro.h>
+	<vector>
+	<algorithm>
+	"MathUtils.h"
+	"World.h"
+	"Body.h"
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1264792812 source:/media/Stuff/dev/Dickbox/src/DebugDraw.cpp
+	"DebugDraw.h"
+
+1294701184 source:/media/Stuff/dev/Dickbox/src/Engine.cpp
+	"Engine.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/Engine.h
+	<allegro.h>
+	<time.h>
+	"Game.h"
+	"Input.h"
+
+1294701184 /media/Stuff/dev/Dickbox/src/Game.h
+	"Stage.h"
+
+1294993389 /media/Stuff/dev/Dickbox/src/Stage.h
+	<allegro.h>
+	<Box2D.h>
+	"World.h"
+	"DebugDraw.h"
+	"FreeDraw.h"
+	"CustomBox.h"
+	"CustomCircle.h"
+	"GameUtils.h"
+	"MathUtils.h"
+	"Input.h"
+	"Engine.h"
+
+1294993389 /media/Stuff/dev/Dickbox/src/Input.h
+	<allegro.h>
+
+1266807922 source:/media/Stuff/dev/Dickbox/src/FreeDraw.cpp
+	"FreeDraw.h"
+
+1294701184 source:/media/Stuff/dev/Dickbox/src/Game.cpp
+	"Game.h"
+
+1294993389 source:/media/Stuff/dev/Dickbox/src/Input.cpp
+	"Input.h"
+
+1294994426 source:/media/Stuff/dev/Dickbox/src/Stage.cpp
+	"Stage.h"
+
+1294992200 source:/media/Stuff/dev/Dickbox/src/World.cpp
+	"World.h"
+
+1264712343 source:/media/Stuff/dev/Dickbox/src/main.cpp
+	"Engine.h"
+
+1294993795 source:/media/Stuff/dev/Dickbox/src/CustomCircle.cpp
+	"CustomCircle.h"
+
+1294993795 cle.h"
+
+1294992586 /media/Stuff/dev/Dickbox/src/CustomCircle.h
+	<allegro.h>
+	"MathUtils.h"
+	"World.h"
+	"Body.h"
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1294992586 e:\dev\dickbox\src\customcircle.h
+	<allegro.h>
+	"MathUtils.h"
+	"World.h"
+	"Body.h"
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1294993795 source:e:\dev\dickbox\src\customcircle.cpp
+	"CustomCircle.h"
+
+1266285634 source:/media/Stuff/dev/Dickbox/src/Bomb.cpp
+	"Bomb.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/Bomb.h
+	<Box2D.h>
+	<allegro.h>
+	"Body.h"
+
+1294992065 /media/Stuff/dev/Dickbox/src/Body.h
+	<Box2D.h>
+	<allegro.h>
+	"MathUtils.h"
+	"GameUtils.h"
+
+1267231074 /media/Stuff/dev/Dickbox/src/MathUtils.h
+	<cmath>
+
+1294997530 /media/Stuff/dev/Dickbox/src/GameUtils.h
+	<allegro.h>
+	<cmath>
+	<time.h>
+	"MathUtils.h"
+
+1294704219 source:/media/Stuff/dev/Dickbox/src/CustomBox.cpp
+	"CustomBox.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/CustomBox.h
+	<allegro.h>
+	"MathUtils.h"
+	"World.h"
+	"Body.h"
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1294992230 /media/Stuff/dev/Dickbox/src/World.h
+	<Box2D.h>
+	<allegro.h>
+	<vector>
+	<queue>
+	<algorithm>
+	"RenderUtils.h"
+	"GameUtils.h"
+	"MathUtils.h"
+	"DebugDraw.h"
+	"Body.h"
+	"Bomb.h"
+	"FreeDraw.h"
+
+1294997530 /media/Stuff/dev/Dickbox/src/RenderUtils.h
+	<allegro.h>
+	<Box2D.h>
+	"MathUtils.h"
+	"GameUtils.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/DebugDraw.h
+	<Box2D.h>
+	<allegro.h>
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1294941069 /media/Stuff/dev/Dickbox/src/FreeDraw.h
+	<allegro.h>
+	<vector>
+	<algorithm>
+	"MathUtils.h"
+	"World.h"
+	"Body.h"
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1294993795 source:/media/Stuff/dev/Dickbox/src/CustomCircle.cpp
+	"CustomCircle.h"
+
+1294992586 /media/Stuff/dev/Dickbox/src/CustomCircle.h
+	<allegro.h>
+	"MathUtils.h"
+	"World.h"
+	"Body.h"
+	"RenderUtils.h"
+	"GameUtils.h"
+
+1266807922 source:/media/Stuff/dev/Dickbox/src/FreeDraw.cpp
+	"FreeDraw.h"
+
+1294701184 source:/media/Stuff/dev/Dickbox/src/Game.cpp
+	"Game.h"
+
+1294701184 /media/Stuff/dev/Dickbox/src/Game.h
+	"Stage.h"
+
+1294996877 /media/Stuff/dev/Dickbox/src/Stage.h
+	<allegro.h>
+	<Box2D.h>
+	"World.h"
+	"DebugDraw.h"
+	"FreeDraw.h"
+	"CustomBox.h"
+	"CustomCircle.h"
+	"GameUtils.h"
+	"MathUtils.h"
+	"Input.h"
+	"Engine.h"
+
+1294993389 /media/Stuff/dev/Dickbox/src/Input.h
+	<allegro.h>
+
+1294996520 /media/Stuff/dev/Dickbox/src/Engine.h
+	<allegro.h>
+	<time.h>
+	"Game.h"
+	"Input.h"
+
+1294993389 source:/media/Stuff/dev/Dickbox/src/Input.cpp
+	"Input.h"
+
+1294992200 source:/media/Stuff/dev/Dickbox/src/World.cpp
+	"World.h"
+
+1264712343 source:/media/Stuff/dev/Dickbox/src/main.cpp
+	"Engine.h"
+
+1294995740 source:/media/Stuff/dev/Dickbox/src/DebugDraw.cpp
+	"DebugDraw.h"
+
+1294996504 source:/media/Stuff/dev/Dickbox/src/Engine.cpp
+	"Engine.h"
+
+1294997041 source:/media/Stuff/dev/Dickbox/src/Stage.cpp
+	"Stage.h"
 

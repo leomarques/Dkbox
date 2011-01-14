@@ -157,6 +157,19 @@ Body* World::makeBody(vector<Point> points)
     return b;
 }
 
+void World::wakeUpAllBodies(void)
+{
+    for (vector<Body*>::iterator body = bodyList.begin(); body != bodyList.end(); body++)
+    {
+        (*body)->wakeUp();
+    }
+}
+void World::setGravity(b2Vec2 gravity)
+{
+    world->SetGravity(gravity);
+    wakeUpAllBodies();
+}
+
 void World::destroyBody(Body *body)
 {
     vector<Body*>::iterator it = find(bodyList.begin(), bodyList.end(), body);
@@ -170,10 +183,34 @@ void World::destroyLastBody(void)
 		destroyBody(bodyList.back());
 }
 
+void World::destroyLastNonStaticBody(void)
+{
+    vector<Body*>::iterator it = bodyList.end();
+    do
+    {
+        it--;
+    } while (it != bodyList.begin() and (*it)->isStatic());
+
+    if (!(*it)->isStatic())
+		destroyBody(*it);
+}
+
 void World::destroyAllBodies(void)
 {
     while (!bodyList.empty())
 		destroyLastBody();
+}
+
+void World::destroyAllNonStaticBodies(void)
+{
+    unsigned int size = bodyList.size();
+    while (1)
+    {
+	    destroyLastNonStaticBody();
+		if (bodyList.size() == size)
+            break;
+        size--;
+    }
 }
 
 void World::afterStepChecks(void)

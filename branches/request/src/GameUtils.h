@@ -1,15 +1,16 @@
 #ifndef GAMEUTILS_H_INCLUDED
 #define GAMEUTILS_H_INCLUDED
 
-#include <Allegro.h>
+#include <allegro.h>
 #include <cmath>
 #include <time.h>
 
-#include "RenderUtils.h"
 #include "MathUtils.h"
 
 #define TIMESTEP 1.0f / 60.0f
 #define ITERATIONS 10
+
+#define SCALE 60.0f
 
 #define INF 0x3f3f3f3f
 #define RANDOM(f, l) (rand() % (l - f + 1) + f)
