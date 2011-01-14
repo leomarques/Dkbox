@@ -1,7 +1,7 @@
 #ifndef FREEDRAW_H
 #define FREEDRAW_H
 
-#include <Allegro.h>
+#include <allegro.h>
 #include <vector>
 #include <algorithm>
 

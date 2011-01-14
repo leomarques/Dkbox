@@ -1,10 +1,11 @@
 #ifndef RENDERUTILS_H_INCLUDED
 #define RENDERUTILS_H_INCLUDED
 
-#include <Allegro.h>
+#include <allegro.h>
 #include <Box2D.h>
 
 #include "MathUtils.h"
+#include "GameUtils.h"
 
 #define RED makecol(255, 0, 0)
 #define GREEN makecol(0, 255, 0)
@@ -15,8 +16,6 @@
 #define GRAY makecol(180, 180, 180)
 #define TRANSPARENT makecol(255, 0, 255)
 #define RANDOMCOLOR makecol(RANDOM(0, 255), RANDOM(0, 255), RANDOM(0, 255))
-
-#define SCALE 60.0f
 
 inline void drawLine(BITMAP *bmp, Point p0, Point p1, int color)
 {
