@@ -28,6 +28,7 @@ void initKeys(void)
     _keys[KEYRIGHT] = Key(&key[KEY_RIGHT]);
     _keys[KEYESC] = Key(&key[KEY_ESC]);
     _keys[KEYTAB] = Key(&key[KEY_TAB]);
+    _keys[KEYV] = Key(&key[KEY_V]);
 
     setKeyLock(KEYTAB, false);
 }
