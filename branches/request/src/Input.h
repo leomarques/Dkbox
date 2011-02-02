@@ -28,7 +28,8 @@
 #define KEYLEFT 22
 #define KEYRIGHT 23
 #define KEYX 24
-#define NKEYS 25
+#define KEYV 25
+#define NKEYS 26
 
 extern bool keys[NKEYS];
 extern bool mouse[2];

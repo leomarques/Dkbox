@@ -90,6 +90,8 @@
 		<Unit filename="src/CustomBox.h" />
 		<Unit filename="src/CustomCircle.cpp" />
 		<Unit filename="src/CustomCircle.h" />
+		<Unit filename="src/CustomPolygon.cpp" />
+		<Unit filename="src/CustomPolygon.h" />
 		<Unit filename="src/DebugDraw.cpp" />
 		<Unit filename="src/DebugDraw.h" />
 		<Unit filename="src/Engine.cpp" />

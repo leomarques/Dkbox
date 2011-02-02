@@ -1,6 +1,10 @@
 Dickbox - code.google.com/p/dickbox
 by LeoDick - leommarques7@gmail.com
 
+r20 (02/02/2011)
+- Gravity adjust tune.
+- Custom polygon feature added.
+
 r19 (14/01/2011)
 - Toggle cursor.
 - Auto dump bodies.

@@ -9,6 +9,7 @@
 #include "FreeDraw.h"
 #include "CustomBox.h"
 #include "CustomCircle.h"
+#include "CustomPolygon.h"
 #include "GameUtils.h"
 #include "MathUtils.h"
 #include "Input.h"
@@ -33,13 +34,14 @@ private:
     FreeDraw *freeDraw;
     CustomBox *customBox;
     CustomCircle *customCircle;
+    CustomPolygon *customPolygon;
     bool menuOn, debugDrawOn, bmpDrawOn, cleanModeOn, autoDumpOn, cursorOn, smallBodiesOn;
     b2Vec2 bodiesSize;
     float32 bodiesRadius;
     b2Vec2 gravity;
     volatile int dt;
 
-    enum BodyType { Random, Box, Circle, Free_Draw, Custom_Box, Custom_Circle };
+    enum BodyType { Random, Box, Circle, Free_Draw, Custom_Box, Custom_Circle, Custom_Polygon };
 
     BodyType bodyType;
 

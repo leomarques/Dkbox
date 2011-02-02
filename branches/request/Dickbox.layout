@@ -19,6 +19,9 @@
 	<File name="src\CustomCircle.h" open="0" top="0" tabpos="3">
 		<Cursor position="0" topLine="0" />
 	</File>
+	<File name="src\CustomPolygon.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="920" topLine="19" />
+	</File>
 	<File name="src\DebugDraw.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="111" topLine="0" />
 	</File>
@@ -31,8 +34,11 @@
 	<File name="src\Engine.h" open="0" top="0" tabpos="3">
 		<Cursor position="242" topLine="0" />
 	</File>
-	<File name="src\FreeDraw.h" open="0" top="0" tabpos="0">
-		<Cursor position="61" topLine="0" />
+	<File name="src\FreeDraw.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="2612" topLine="67" />
+	</File>
+	<File name="src\FreeDraw.h" open="0" top="0" tabpos="4">
+		<Cursor position="42" topLine="0" />
 	</File>
 	<File name="src\Game.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="60" topLine="0" />
@@ -44,22 +50,22 @@
 		<Cursor position="137" topLine="0" />
 	</File>
 	<File name="src\Input.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="548" topLine="6" />
+		<Cursor position="832" topLine="0" />
 	</File>
 	<File name="src\Input.h" open="0" top="0" tabpos="1">
-		<Cursor position="763" topLine="0" />
+		<Cursor position="517" topLine="7" />
 	</File>
 	<File name="src\MathUtils.h" open="0" top="0" tabpos="0">
 		<Cursor position="80" topLine="0" />
 	</File>
 	<File name="src\RenderUtils.h" open="0" top="0" tabpos="0">
-		<Cursor position="148" topLine="36" />
+		<Cursor position="1256" topLine="16" />
 	</File>
-	<File name="src\Stage.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="9042" topLine="337" />
+	<File name="src\Stage.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="7846" topLine="325" />
 	</File>
-	<File name="src\Stage.h" open="0" top="0" tabpos="5">
-		<Cursor position="513" topLine="14" />
+	<File name="src\Stage.h" open="0" top="0" tabpos="2">
+		<Cursor position="219" topLine="0" />
 	</File>
 	<File name="src\World.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="4116" topLine="151" />

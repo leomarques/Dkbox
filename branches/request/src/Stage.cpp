@@ -6,6 +6,7 @@ Stage::Stage()
     debugDraw = new DebugDraw(buffer);
     freeDraw = new FreeDraw();
     customBox = new CustomBox();
+    customPolygon = new CustomPolygon();
     customCircle = new CustomCircle();
 
     debugDrawOn = false;
@@ -33,6 +34,7 @@ Stage::~Stage()
     delete freeDraw;
     delete customBox;
     delete customCircle;
+    delete customPolygon;
     delete debugDraw;
     delete world;
 }
@@ -46,7 +48,7 @@ bool Stage::step(void)
     if (keys[KEYESC])
         return false;
 
-    if (mouse[0] or (autoDumpOn and (bodyType != Free_Draw and bodyType != Custom_Box and bodyType != Custom_Circle)))
+    if (mouse[0] or (autoDumpOn and (bodyType != Free_Draw and bodyType != Custom_Box and bodyType != Custom_Circle and bodyType != Custom_Polygon)))
     {
         bodiesSize = smallBodiesOn ? SMALLBODYSIZE : RANDBODYSIZE;
         bodiesRadius = smallBodiesOn ? SMALLHALFSIZE : RANDHALFSIZE;
@@ -72,6 +74,10 @@ bool Stage::step(void)
             freeDraw->takePoint(Point(mouse_x, mouse_y));
             break;
 
+        case Custom_Polygon:
+            customPolygon->takePoint(Point(mouse_x, mouse_y));
+            break;
+
         case Custom_Box:
             customBox->takePoint(Point(mouse_x, mouse_y));
             break;
@@ -89,10 +95,21 @@ bool Stage::step(void)
             customBox->makeBody(world);
         if (customCircle->On)
             customCircle->makeBody(world);
+        if (customPolygon->On)
+            customPolygon->updateView(Point(mouse_x, mouse_y));
     }
 
     if (mouse[1])
-        world->makeBomb(coordAllegToB2(Point(mouse_x, mouse_y)));
+    {
+        if (customPolygon->On)
+        {
+            customPolygon->makeBody(world);
+        }
+        else
+        {
+            world->makeBomb(coordAllegToB2(Point(mouse_x, mouse_y)));
+        }
+    }
 
     if (keys[KEY1])
         bodyType = Random;
@@ -125,7 +142,7 @@ bool Stage::step(void)
         world->toggleSimulation();
 
     if (keys[KEY9])
-        if (bodyType != Free_Draw && bodyType != Custom_Box)
+        if (bodyType != Free_Draw && bodyType != Custom_Box && bodyType != Custom_Polygon)
             toggleMouseLock();
 
     if (keys[KEY0])
@@ -155,6 +172,12 @@ bool Stage::step(void)
         setMouseLock(false);
     }
 
+    if (keys[KEYV])
+    {
+        bodyType = Custom_Polygon;
+        setMouseLock(true);
+    }
+
     if (keys[KEYN])
         world->destroyLastNonStaticBody();
 
@@ -166,25 +189,25 @@ bool Stage::step(void)
 
     if (keys[KEYUP])
     {
-        gravity.y += 2;
+        gravity.y += 10;
         world->setGravity(gravity);
     }
 
     if (keys[KEYDOWN])
     {
-        gravity.y -= 2;
+        gravity.y -= 10;
         world->setGravity(gravity);
     }
 
     if (keys[KEYLEFT])
     {
-        gravity.x -= 2;
+        gravity.x -= 10;
         world->setGravity(gravity);
     }
 
     if (keys[KEYRIGHT])
     {
-        gravity.x += 2;
+        gravity.x += 10;
         world->setGravity(gravity);
     }
 
@@ -239,8 +262,8 @@ void Stage::render(void)
     if (customBox->On)
         draw_sprite(buffer, customBox->bmp, 0, 0);
 
-    if (customCircle->On)
-        draw_sprite(buffer, customCircle->bmp, 0, 0);
+    if (customPolygon->On)
+        draw_sprite(buffer, customPolygon->bmp, 0, 0);
 
     /*************************************************************************************************/
     // TODO: Bind this.
@@ -272,6 +295,10 @@ void Stage::render(void)
 
     case Custom_Circle:
         textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Circle");
+        break;
+
+    case Custom_Polygon:
+        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Polygon");
         break;
 
     default:
@@ -328,8 +355,10 @@ textprintf_ex(buffer, font, 110, 65, fps < FPS ? fps < (FPS / 2) ? RED : YELLOW 
         textprintf_ex(buffer, font, 10, 265, BLUE, -1, "N : Destroy last non-static body");
         textprintf_ex(buffer, font, 10, 275, BLUE, -1, "M : Destroy all non-static body");
         textprintf_ex(buffer, font, 10, 285, BLUE, -1, "S : Toggle small bodies");
-        textprintf_ex(buffer, font, 10, 295, BLUE, -1, "X : Custom circle");
-        textprintf_ex(buffer, font, 10, 305, BLUE, -1, "Arrow keys : Adjust gravity");
+        textprintf_ex(buffer, font, 10, 295, BLUE, -1, "V : Custom polygon");
+        textprintf_ex(buffer, font, 10, 305, BLUE, -1, "X : Custom circle");
+        textprintf_ex(buffer, font, 10, 315, BLUE, -1, "P : Pyramid show");
+        textprintf_ex(buffer, font, 10, 325, BLUE, -1, "Arrow keys : Adjust gravity");
     }
     }
     /*************************************************************************************************/
