@@ -132,7 +132,7 @@
 	"RenderUtils.h"
 	"GameUtils.h"
 
-1266285634 source:e:\dev\dickbox\src\bomb.cpp
+1296778610 source:e:\dev\dickbox\src\bomb.cpp
 	"Bomb.h"
 
 1294941069 e:\dev\dickbox\src\bomb.h
@@ -140,7 +140,7 @@
 	<allegro.h>
 	"Body.h"
 
-1294992065 e:\dev\dickbox\src\body.h
+1296778116 e:\dev\dickbox\src\body.h
 	<Box2D.h>
 	<allegro.h>
 	"MathUtils.h"
@@ -149,7 +149,7 @@
 1267234674 e:\dev\dickbox\src\mathutils.h
 	<cmath>
 
-1294997530 e:\dev\dickbox\src\gameutils.h
+1296778399 e:\dev\dickbox\src\gameutils.h
 	<allegro.h>
 	<cmath>
 	<time.h>
@@ -172,7 +172,7 @@
 	"RenderUtils.h"
 	"GameUtils.h"
 
-1294992230 e:\dev\dickbox\src\world.h
+1297181141 e:\dev\dickbox\src\world.h
 	<Box2D.h>
 	<allegro.h>
 	<vector>
@@ -184,9 +184,8 @@
 	"DebugDraw.h"
 	"Body.h"
 	"Bomb.h"
-	"FreeDraw.h"
 
-1294941069 e:\dev\dickbox\src\debugdraw.h
+1297181656 e:\dev\dickbox\src\debugdraw.h
 	<Box2D.h>
 	<allegro.h>
 	"RenderUtils.h"
@@ -202,22 +201,23 @@
 	"RenderUtils.h"
 	"GameUtils.h"
 
-1294995740 source:e:\dev\dickbox\src\debugdraw.cpp
+1297181648 source:e:\dev\dickbox\src\debugdraw.cpp
 	"DebugDraw.h"
 
-1294996504 source:e:\dev\dickbox\src\engine.cpp
+1297108664 source:e:\dev\dickbox\src\engine.cpp
 	"Engine.h"
 
-1294996520 e:\dev\dickbox\src\engine.h
+1297107914 e:\dev\dickbox\src\engine.h
 	<allegro.h>
 	<time.h>
 	"Game.h"
 	"Input.h"
 
-1294701184 e:\dev\dickbox\src\game.h
+1297185300 e:\dev\dickbox\src\game.h
 	"Stage.h"
+	"DebugDraw.h"
 
-1296659244 e:\dev\dickbox\src\stage.h
+1297182939 e:\dev\dickbox\src\stage.h
 	<allegro.h>
 	<Box2D.h>
 	"World.h"
@@ -229,7 +229,7 @@
 	"GameUtils.h"
 	"MathUtils.h"
 	"Input.h"
-	"Engine.h"
+	"Game.h"
 
 1296658784 e:\dev\dickbox\src\input.h
 	<allegro.h>
@@ -237,7 +237,7 @@
 1266811522 source:e:\dev\dickbox\src\freedraw.cpp
 	"FreeDraw.h"
 
-1294701184 source:e:\dev\dickbox\src\game.cpp
+1297185449 source:e:\dev\dickbox\src\game.cpp
 	"Game.h"
 
 1294992200 source:e:\dev\dickbox\src\world.cpp
@@ -249,7 +249,7 @@
 1296658798 source:e:\dev\dickbox\src\input.cpp
 	"Input.h"
 
-1296663210 source:e:\dev\dickbox\src\stage.cpp
+1297185413 source:e:\dev\dickbox\src\stage.cpp
 	"Stage.h"
 
 1262298526 source:e:\dev\dickbox\res\icon.rc
@@ -503,4 +503,7 @@
 
 1296664809 source:e:\dev\dickbox\src\custompolygon.cpp
 	"CustomPolygon.h"
+
+1297110004 e:\dev\dickbox\src\game.cpp
+	"Game.h"
 

@@ -13,7 +13,7 @@
 #include "GameUtils.h"
 #include "MathUtils.h"
 #include "Input.h"
-#include "Engine.h"
+#include "Game.h"
 
 #define RANDHALFSIZE (RANDOM(6, 35)) / 100.0f
 #define RANDBODYSIZE b2Vec2(RANDHALFSIZE, RANDHALFSIZE)
@@ -26,11 +26,10 @@ public:
     Stage();
     ~Stage();
     bool step(void);
-    void render(void);
+    void render(BITMAP *buffer);
 
 private:
     World *world;
-    DebugDraw *debugDraw;
     FreeDraw *freeDraw;
     CustomBox *customBox;
     CustomCircle *customCircle;

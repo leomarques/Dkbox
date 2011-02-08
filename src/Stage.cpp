@@ -3,7 +3,6 @@
 Stage::Stage()
 {
     world = new World();
-    debugDraw = new DebugDraw(buffer);
     freeDraw = new FreeDraw();
     customBox = new CustomBox();
     customPolygon = new CustomPolygon();
@@ -16,7 +15,7 @@ Stage::Stage()
     bmpDrawOn = true;
     cleanModeOn = true;
 
-    dt = counter;
+    dt = gtime;
 
     bodyType = Random;
     gravity.x = 0.0f;
@@ -26,6 +25,11 @@ Stage::Stage()
     bodiesRadius = RANDHALFSIZE;
 
     setMouseLock(false);
+    setKeyLock(KEYUP, false);
+    setKeyLock(KEYDOWN, false);
+    setKeyLock(KEYLEFT, false);
+    setKeyLock(KEYRIGHT, false);
+
     createGround();
 }
 
@@ -35,7 +39,6 @@ Stage::~Stage()
     delete customBox;
     delete customCircle;
     delete customPolygon;
-    delete debugDraw;
     delete world;
 }
 
@@ -189,25 +192,25 @@ bool Stage::step(void)
 
     if (keys[KEYUP])
     {
-        gravity.y += 10;
+        gravity.y++;
         world->setGravity(gravity);
     }
 
     if (keys[KEYDOWN])
     {
-        gravity.y -= 10;
+        gravity.y--;
         world->setGravity(gravity);
     }
 
     if (keys[KEYLEFT])
     {
-        gravity.x -= 10;
+        gravity.x--;
         world->setGravity(gravity);
     }
 
     if (keys[KEYRIGHT])
     {
-        gravity.x += 10;
+        gravity.x++;
         world->setGravity(gravity);
     }
 
@@ -236,7 +239,7 @@ bool Stage::step(void)
     return true;
 }
 
-void Stage::render(void)
+void Stage::render(BITMAP *buffer)
 {
     if (bmpDrawOn)
         for (vector<Body*>::iterator it = world->bodyList.begin(); it != world->bodyList.end(); ++it)
@@ -267,107 +270,105 @@ void Stage::render(void)
 
     /*************************************************************************************************/
     // TODO: Bind this.
-    if (!cleanModeOn) {
-    textprintf_centre_ex(buffer, font, SCREEN_W / 2, 40, GREEN, -1, "Hold TAB for menu");
-
-    textprintf_ex(buffer, font, 10, 15, GRAY, -1, "Body type:");
-    switch (bodyType)
+    if (!cleanModeOn)
     {
-    case Random:
-        textprintf_ex(buffer, font, 100, 15, BLUE, -1, "Random");
-        break;
+        textprintf_centre_ex(buffer, font, SCREEN_W / 2, 40, GREEN, -1, "Hold TAB for menu");
 
-    case Box:
-        textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Box");
-        break;
+        textprintf_ex(buffer, font, 10, 15, GRAY, -1, "Body type:");
+        switch (bodyType)
+        {
+        case Random:
+            textprintf_ex(buffer, font, 100, 15, BLUE, -1, "Random");
+            break;
 
-    case Circle:
-        textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Circle");
-        break;
+        case Box:
+            textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Box");
+            break;
 
-    case Free_Draw:
-        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Free Draw");
-        break;
+        case Circle:
+            textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Circle");
+            break;
 
-    case Custom_Box:
-        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Box");
-        break;
+        case Free_Draw:
+            textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Free Draw");
+            break;
 
-    case Custom_Circle:
-        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Circle");
-        break;
+        case Custom_Box:
+            textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Box");
+            break;
 
-    case Custom_Polygon:
-        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Polygon");
-        break;
+        case Custom_Circle:
+            textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Circle");
+            break;
 
-    default:
-        break;
-    }
+        case Custom_Polygon:
+            textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Polygon");
+            break;
 
-    textprintf_ex(buffer, font, 200, 15, GRAY, -1, "Static mode:");
-    if (world->staticModeOn)
-        textprintf_ex(buffer, font, 310, 15, GREEN, -1, "On");
-    else
-        textprintf_ex(buffer, font, 310, 15, RED, -1, "Off");
+        default:
+            break;
+        }
 
-    textprintf_ex(buffer, font, 400, 15, GRAY, -1, "Mouse lock:");
-    if (mouseLockOn)
-        textprintf_ex(buffer, font, 500, 15, GREEN, -1, "On");
-    else
-        textprintf_ex(buffer, font, 500, 15, RED, -1, "Off");
+        textprintf_ex(buffer, font, 200, 15, GRAY, -1, "Static mode:");
+        if (world->staticModeOn)
+            textprintf_ex(buffer, font, 310, 15, GREEN, -1, "On");
+        else
+            textprintf_ex(buffer, font, 310, 15, RED, -1, "Off");
 
-    textprintf_ex(buffer, font, 600, 15, GRAY, -1, "Gravity: %.2f, %.2f", gravity.x, gravity.y);
+        textprintf_ex(buffer, font, 400, 15, GRAY, -1, "Mouse lock:");
+        if (mouseLockOn)
+            textprintf_ex(buffer, font, 500, 15, GREEN, -1, "On");
+        else
+            textprintf_ex(buffer, font, 500, 15, RED, -1, "Off");
 
-    if (!world->simulateOn)
-        textprintf_centre_ex(buffer, font, SCREEN_W / 2, 65, YELLOW, -1, "PAUSED");
+        textprintf_ex(buffer, font, 600, 15, GRAY, -1, "Gravity: %.2f, %.2f", gravity.x, gravity.y);
 
-    textprintf_ex(buffer, font, 10, 40, GRAY, -1, "Bodies:");
-    textprintf_ex(buffer, font, 70, 40, world->bodyList.size() > 400 ? RED : GRAY, -1, "%d", world->bodyList.size());
+        if (!world->simulateOn)
+            textprintf_centre_ex(buffer, font, SCREEN_W / 2, 65, YELLOW, -1, "PAUSED");
 
-    dt = (int) (counter - dt);
-    if (dt == 0) dt = 1;
-    int fps = FPS / dt;
-    dt = counter;
+        textprintf_ex(buffer, font, 10, 40, GRAY, -1, "Bodies:");
+        textprintf_ex(buffer, font, 70, 40, world->bodyList.size() > 400 ? RED : GRAY, -1, "%d", world->bodyList.size());
 
-    textprintf_ex(buffer, font, 10, 65, GRAY, -1, "Approx. FPS:");
-textprintf_ex(buffer, font, 110, 65, fps < FPS ? fps < (FPS / 2) ? RED : YELLOW : GREEN, -1, "%d", fps);
+        dt = (int) (gtime - dt);
+        if (dt == 0) dt = 1;
+        int fps = 60 / dt;
+        dt = gtime;
 
-    if (menuOn)
-    {
-        textprintf_ex(buffer, font, 10, 85, BLUE, -1, "Press keys 0-9 to choose options");
-        textprintf_ex(buffer, font, 10, 100, BLUE, -1, "0 : Reset");
-        textprintf_ex(buffer, font, 10, 110, BLUE, -1, "1 : Random bodies");
-        textprintf_ex(buffer, font, 10, 120, BLUE, -1, "2 : Box");
-        textprintf_ex(buffer, font, 10, 130, BLUE, -1, "3 : Circle");
-        textprintf_ex(buffer, font, 10, 140, BLUE, -1, "4 : Free draw");
-        textprintf_ex(buffer, font, 10, 150, BLUE, -1, "5 : Custom Box");
-        textprintf_ex(buffer, font, 10, 160, BLUE, -1, "6 : Destroy last body");
-        textprintf_ex(buffer, font, 10, 170, BLUE, -1, "7 : Toggle static mode");
-        textprintf_ex(buffer, font, 10, 180, BLUE, -1, "8 : Pause");
-        textprintf_ex(buffer, font, 10, 190, BLUE, -1, "9 : Toggle Mouse lock");
-        textprintf_ex(buffer, font, 10, 205, BLUE, -1, "MB1 : Make bodies");
-        textprintf_ex(buffer, font, 10, 215, BLUE, -1, "MB2 : Make bombs");
+        textprintf_ex(buffer, font, 10, 65, GRAY, -1, "Approx. FPS:");
+textprintf_ex(buffer, font, 110, 65, fps < 60 ? fps < (60 / 2) ? RED : YELLOW : GREEN, -1, "%d", fps);
 
-        textprintf_ex(buffer, font, 10, 235, BLUE, -1, "H : Hide all text");
-        textprintf_ex(buffer, font, 10, 245, BLUE, -1, "C : Toggle cursor");
-        textprintf_ex(buffer, font, 10, 255, BLUE, -1, "A : Auto dump bodies");
-        textprintf_ex(buffer, font, 10, 265, BLUE, -1, "N : Destroy last non-static body");
-        textprintf_ex(buffer, font, 10, 275, BLUE, -1, "M : Destroy all non-static body");
-        textprintf_ex(buffer, font, 10, 285, BLUE, -1, "S : Toggle small bodies");
-        textprintf_ex(buffer, font, 10, 295, BLUE, -1, "V : Custom polygon");
-        textprintf_ex(buffer, font, 10, 305, BLUE, -1, "X : Custom circle");
-        textprintf_ex(buffer, font, 10, 315, BLUE, -1, "P : Pyramid show");
-        textprintf_ex(buffer, font, 10, 325, BLUE, -1, "Arrow keys : Adjust gravity");
-    }
+        if (menuOn)
+        {
+            textprintf_ex(buffer, font, 10, 85, BLUE, -1, "Press keys 0-9 to choose options");
+            textprintf_ex(buffer, font, 10, 100, BLUE, -1, "0 : Reset");
+            textprintf_ex(buffer, font, 10, 110, BLUE, -1, "1 : Random bodies");
+            textprintf_ex(buffer, font, 10, 120, BLUE, -1, "2 : Box");
+            textprintf_ex(buffer, font, 10, 130, BLUE, -1, "3 : Circle");
+            textprintf_ex(buffer, font, 10, 140, BLUE, -1, "4 : Free draw");
+            textprintf_ex(buffer, font, 10, 150, BLUE, -1, "5 : Custom Box");
+            textprintf_ex(buffer, font, 10, 160, BLUE, -1, "6 : Destroy last body");
+            textprintf_ex(buffer, font, 10, 170, BLUE, -1, "7 : Toggle static mode");
+            textprintf_ex(buffer, font, 10, 180, BLUE, -1, "8 : Pause");
+            textprintf_ex(buffer, font, 10, 190, BLUE, -1, "9 : Toggle Mouse lock");
+            textprintf_ex(buffer, font, 10, 205, BLUE, -1, "MB1 : Make bodies");
+            textprintf_ex(buffer, font, 10, 215, BLUE, -1, "MB2 : Make bombs");
+
+            textprintf_ex(buffer, font, 10, 235, BLUE, -1, "H : Hide all text");
+            textprintf_ex(buffer, font, 10, 245, BLUE, -1, "C : Toggle cursor");
+            textprintf_ex(buffer, font, 10, 255, BLUE, -1, "A : Auto dump bodies");
+            textprintf_ex(buffer, font, 10, 265, BLUE, -1, "N : Destroy last non-static body");
+            textprintf_ex(buffer, font, 10, 275, BLUE, -1, "M : Destroy all non-static body");
+            textprintf_ex(buffer, font, 10, 285, BLUE, -1, "S : Toggle small bodies");
+            textprintf_ex(buffer, font, 10, 295, BLUE, -1, "V : Custom polygon");
+            textprintf_ex(buffer, font, 10, 305, BLUE, -1, "X : Custom circle");
+            textprintf_ex(buffer, font, 10, 315, BLUE, -1, "P : Pyramid show");
+            textprintf_ex(buffer, font, 10, 325, BLUE, -1, "Arrow keys : Adjust gravity");
+        }
     }
     /*************************************************************************************************/
 
     if (cursorOn)
         draw_sprite(buffer, mouse_sprite, mouse_x, mouse_y);
-
-    blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    clear_bitmap(buffer);
 }
 
 void Stage::toggleDebugDraw(void)
