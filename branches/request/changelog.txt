@@ -1,6 +1,10 @@
 Dickbox - code.google.com/p/dickbox
 by LeoDick - leommarques7@gmail.com
 
+r21 (08/02/2011)
+- Gravity control changed again.
+- Engine changes.
+
 r20 (02/02/2011)
 - Gravity adjust tune.
 - Custom polygon feature added.

@@ -5,7 +5,6 @@
 #define DEFAULTRESY 600
 #define DEFAULTCOLORDEPTH 32
 #define FPS 60
-#define WINTITLE "Dickbox"
 
 #include <allegro.h>
 #include <time.h>
@@ -13,7 +12,6 @@
 #include "Game.h"
 #include "Input.h"
 
-extern BITMAP *buffer;
 extern volatile int counter;
 
 void startEngine(void);

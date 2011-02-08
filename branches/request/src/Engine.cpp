@@ -1,7 +1,6 @@
 #include "Engine.h"
 
 volatile int counter, fpsControl, closeButtonPressed;
-BITMAP *buffer;
 
 void startEngine(void)
 {
@@ -38,9 +37,6 @@ void init(void)
 
     pop_config_state();
 
-    buffer = create_bitmap(SCREEN_W, SCREEN_H);
-    clear_bitmap(buffer);
-
     set_window_title(WINTITLE);
 
     inputInit();
@@ -65,14 +61,15 @@ void playGame(void)
         if (counter >= fpsControl)
         {
             if (!gameStep())
-                return;
-            gameRender();
+                break;
+
+            BITMAP *bmp = gameRender();
+            blit(bmp, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+			clear_bitmap(bmp);
 
             fpsControl = counter + 1;
         }
     }
-
-    destroy_bitmap(buffer);
 }
 
 void abortOnError(void)

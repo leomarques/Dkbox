@@ -15,7 +15,6 @@ using namespace std;
 #include "DebugDraw.h"
 #include "Body.h"
 #include "Bomb.h"
-#include "FreeDraw.h"
 
 #define DENSITY 1.0f
 #define FRICTION 0.3f
