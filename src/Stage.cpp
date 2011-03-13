@@ -3,14 +3,27 @@
 Stage::Stage()
 {
     world = new World();
-    debugDraw = new DebugDraw(buffer);
     freeDraw = new FreeDraw();
     customBox = new CustomBox();
+    customPolygon = new CustomPolygon();
+    customCircle = new CustomCircle();
 
-    bodyType = Free_Draw;
     debugDrawOn = false;
+    smallBodiesOn = false;
+    cursorOn = true;
+    autoDumpOn = false;
     bmpDrawOn = true;
-    dt = counter;
+    cleanModeOn = false;
+
+    dt = gtime;
+
+    bodyType = Random;
+    gravity.x = 0.0f;
+    gravity.y = -10.0f;
+
+    bodiesSize = RANDBODYSIZE;
+    bodiesRadius = RANDHALFSIZE;
+
     setMouseLock(false);
 
     createGround();
@@ -18,10 +31,11 @@ Stage::Stage()
 
 Stage::~Stage()
 {
+    delete world;
     delete freeDraw;
     delete customBox;
-    delete debugDraw;
-    delete world;
+    delete customCircle;
+    delete customPolygon;
 }
 
 bool Stage::step(void)
@@ -33,31 +47,42 @@ bool Stage::step(void)
     if (keys[KEYESC])
         return false;
 
-    if (mouse[0])
+    if (mouse[0] or (autoDumpOn and (bodyType == Random or bodyType == Box or bodyType == Circle)))
     {
+        bodiesSize = smallBodiesOn ? SMALLBODYSIZE : RANDBODYSIZE;
+        bodiesRadius = smallBodiesOn ? SMALLHALFSIZE : RANDHALFSIZE;
+
         switch (bodyType)
         {
         case Random:
             if (RANDOM(0, 1))
-                world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
+                world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), bodiesSize);
             else
-                world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), RANDBODYSIZE);
+                world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), bodiesRadius);
             break;
 
         case Box:
-            world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), b2Vec2(RANDBODYSIZE, RANDBODYSIZE));
+            world->makeBox(coordAllegToB2(Point(mouse_x, mouse_y)), bodiesSize);
             break;
 
         case Circle:
-            world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), RANDBODYSIZE);
+            world->makeCircle(coordAllegToB2(Point(mouse_x, mouse_y)), bodiesRadius);
             break;
 
         case Free_Draw:
             freeDraw->takePoint(Point(mouse_x, mouse_y));
             break;
 
+        case Custom_Polygon:
+            customPolygon->takePoint(Point(mouse_x, mouse_y));
+            break;
+
         case Custom_Box:
             customBox->takePoint(Point(mouse_x, mouse_y));
+            break;
+
+        case Custom_Circle:
+            customCircle->takePoint(Point(mouse_x, mouse_y));
             break;
         }
     }
@@ -67,10 +92,19 @@ bool Stage::step(void)
             freeDraw->makeBody(world);
         if (customBox->On)
             customBox->makeBody(world);
+        if (customCircle->On)
+            customCircle->makeBody(world);
+        if (customPolygon->On)
+            customPolygon->updateView(Point(mouse_x, mouse_y));
     }
 
     if (mouse[1])
-        world->makeBomb(coordAllegToB2(Point(mouse_x, mouse_y)));
+    {
+        if (customPolygon->On)
+            customPolygon->makeBody(world);
+        else
+            world->makeBomb(coordAllegToB2(Point(mouse_x, mouse_y)));
+    }
 
     if (keys[KEY1])
         bodyType = Random;
@@ -103,7 +137,7 @@ bool Stage::step(void)
         world->toggleSimulation();
 
     if (keys[KEY9])
-        if (bodyType != Free_Draw && bodyType != Custom_Box)
+        if (bodyType == Random or bodyType == Box or bodyType == Circle)
             toggleMouseLock();
 
     if (keys[KEY0])
@@ -117,6 +151,60 @@ bool Stage::step(void)
 
     if (keys[KEYTAB])
         menuOn = true;
+
+    if (keys[KEYH])
+        cleanModeOn = !cleanModeOn;
+
+    if (keys[KEYA])
+        autoDumpOn = !autoDumpOn;
+
+    if (keys[KEYC])
+        cursorOn = !cursorOn;
+
+    if (keys[KEYX])
+    {
+        bodyType = Custom_Circle;
+        setMouseLock(false);
+    }
+
+    if (keys[KEYV])
+    {
+        bodyType = Custom_Polygon;
+        setMouseLock(true);
+    }
+
+    if (keys[KEYN])
+        world->destroyLastNonStaticBody();
+
+    if (keys[KEYM])
+        world->destroyAllNonStaticBodies();
+
+    if (keys[KEYS])
+        smallBodiesOn = !smallBodiesOn;
+
+    if (keys[KEYUP])
+    {
+        gravity.y += 2;
+        world->setGravity(gravity);
+    }
+
+    if (keys[KEYDOWN])
+    {
+        gravity.y -= 2;
+        world->setGravity(gravity);
+    }
+
+    if (keys[KEYLEFT])
+    {
+        gravity.x -= 2;
+        world->setGravity(gravity);
+    }
+
+    if (keys[KEYRIGHT])
+    {
+        gravity.x += 2;
+        world->setGravity(gravity);
+    }
 
     if (keys[KEYD])
     {
@@ -143,12 +231,14 @@ bool Stage::step(void)
     return true;
 }
 
-void Stage::render(void)
+void Stage::render(BITMAP *buffer)
 {
+    clear_to_color(buffer, makecol(75, 75, 75));
     if (bmpDrawOn)
         for (vector<Body*>::iterator it = world->bodyList.begin(); it != world->bodyList.end(); ++it)
         {
             Body *b = *it;
+
             BITMAP *bmp = b->bmp;
             if (!bmp)
                 continue;
@@ -166,85 +256,113 @@ void Stage::render(void)
     if (customBox->On)
         draw_sprite(buffer, customBox->bmp, 0, 0);
 
+    if (customCircle->On)
+        draw_sprite(buffer, customCircle->bmp, 0, 0);
+
+    if (customPolygon->On)
+        draw_sprite(buffer, customPolygon->bmp, 0, 0);
+
     /*************************************************************************************************/
-    // TODO: Bind this.
-    textprintf_centre_ex(buffer, font, SCREEN_W / 2, 40, GREEN, -1, "Hold TAB for menu");
-
-    textprintf_ex(buffer, font, 10, 15, GRAY, -1, "Body type:");
-    switch (bodyType)
+    //Menu
+    if (!cleanModeOn)
     {
-    case Random:
-        textprintf_ex(buffer, font, 100, 15, BLUE, -1, "Random");
-        break;
+        textprintf_centre_ex(buffer, font, SCREEN_W / 2, 40, GREEN, -1, "Hold TAB for menu");
 
-    case Box:
-        textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Box");
-        break;
+        textprintf_ex(buffer, font, 10, 15, GRAY, -1, "Body type:");
+        switch (bodyType)
+        {
+        case Random:
+            textprintf_ex(buffer, font, 100, 15, BLUE, -1, "Random");
+            break;
 
-    case Circle:
-        textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Circle");
-        break;
+        case Box:
+            textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Box");
+            break;
 
-    case Free_Draw:
-        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Free Draw");
-        break;
+        case Circle:
+            textprintf_ex(buffer, font, 100, 15, YELLOW, -1, "Circle");
+            break;
 
-    case Custom_Box:
-        textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Box");
-        break;
+        case Free_Draw:
+            textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Free Draw");
+            break;
 
-    default:
-        break;
-    }
+        case Custom_Box:
+            textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Box");
+            break;
 
-    textprintf_ex(buffer, font, 200, 15, GRAY, -1, "Static mode:");
-    if (world->staticModeOn)
-        textprintf_ex(buffer, font, 310, 15, GREEN, -1, "On");
-    else
-        textprintf_ex(buffer, font, 310, 15, RED, -1, "Off");
+        case Custom_Circle:
+            textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Circle");
+            break;
 
-    textprintf_ex(buffer, font, 400, 15, GRAY, -1, "Mouse lock:");
-    if (mouseLockOn)
-        textprintf_ex(buffer, font, 500, 15, GREEN, -1, "On");
-    else
-        textprintf_ex(buffer, font, 500, 15, RED, -1, "Off");
+        case Custom_Polygon:
+            textprintf_ex(buffer, font, 100, 15, PURPLE, -1, "Custom Polygon");
+            break;
 
-    if (!world->simulateOn)
-        textprintf_centre_ex(buffer, font, SCREEN_W / 2, 65, YELLOW, -1, "PAUSED");
+        default:
+            break;
+        }
 
-    textprintf_ex(buffer, font, 10, 40, GRAY, -1, "Bodies:");
-    textprintf_ex(buffer, font, 70, 40, world->bodyList.size() > 400 ? RED : GRAY, -1, "%d", world->bodyList.size());
+        textprintf_ex(buffer, font, 230, 15, GRAY, -1, "Static mode:");
+        if (world->staticModeOn)
+            textprintf_ex(buffer, font, 340, 15, GREEN, -1, "On");
+        else
+            textprintf_ex(buffer, font, 340, 15, RED, -1, "Off");
 
-    dt = (int) (counter - dt);
-    if (dt == 0) dt = 1;
-    int fps = FPS / dt;
-    dt = counter;
+        textprintf_ex(buffer, font, 400, 15, GRAY, -1, "Mouse lock:");
+        if (mouseLockOn)
+            textprintf_ex(buffer, font, 500, 15, GREEN, -1, "On");
+        else
+            textprintf_ex(buffer, font, 500, 15, RED, -1, "Off");
 
-    textprintf_ex(buffer, font, 10, 65, GRAY, -1, "Approx. FPS:");
-textprintf_ex(buffer, font, 110, 65, fps < FPS ? fps < (FPS / 2) ? RED : YELLOW : GREEN, -1, "%d", fps);
+        textprintf_ex(buffer, font, 600, 15, GRAY, -1, "Gravity: %.2f, %.2f", gravity.x, gravity.y);
 
-    if (menuOn)
-    {
-        textprintf_ex(buffer, font, 10, 85, BLUE, -1, "Press keys 0-9 to choose options");
-        textprintf_ex(buffer, font, 10, 100, BLUE, -1, "0 : Reset");
-        textprintf_ex(buffer, font, 10, 110, BLUE, -1, "1 : Random bodies");
-        textprintf_ex(buffer, font, 10, 120, BLUE, -1, "2 : Box");
-        textprintf_ex(buffer, font, 10, 130, BLUE, -1, "3 : Circle");
-        textprintf_ex(buffer, font, 10, 140, BLUE, -1, "4 : Free draw");
-        textprintf_ex(buffer, font, 10, 150, BLUE, -1, "5 : Custom Box");
-        textprintf_ex(buffer, font, 10, 160, BLUE, -1, "6 : Destroy last body");
-        textprintf_ex(buffer, font, 10, 170, BLUE, -1, "7 : Toggle static mode");
-        textprintf_ex(buffer, font, 10, 180, BLUE, -1, "8 : Pause");
-        textprintf_ex(buffer, font, 10, 190, BLUE, -1, "9 : Toggle Mouse lock");
-        textprintf_ex(buffer, font, 10, 205, BLUE, -1, "MB1 : Make bodies");
-        textprintf_ex(buffer, font, 10, 215, BLUE, -1, "MB2 : Make bombs");
+        if (!world->simulateOn)
+            textprintf_centre_ex(buffer, font, SCREEN_W / 2, 65, YELLOW, -1, "PAUSED");
+
+        textprintf_ex(buffer, font, 10, 40, GRAY, -1, "Bodies:");
+        textprintf_ex(buffer, font, 70, 40, world->bodyList.size() > 400 ? RED : GRAY, -1, "%d", world->bodyList.size());
+
+        dt = (int) (gtime - dt);
+        if (dt == 0) dt = 1;
+        int fps = 60 / dt;
+        dt = gtime;
+
+        textprintf_ex(buffer, font, 10, 65, GRAY, -1, "Approx. FPS:");
+textprintf_ex(buffer, font, 110, 65, fps < 60 ? fps < (60 / 2) ? RED : YELLOW : GREEN, -1, "%d", fps);
+
+        if (menuOn)
+        {
+            textprintf_ex(buffer, font, 10, 85, WHITE, -1, "Press keys 0-9 to choose options");
+            textprintf_ex(buffer, font, 10, 100, WHITE, -1, "0 : Reset");
+            textprintf_ex(buffer, font, 10, 110, WHITE, -1, "1 : Random bodies");
+            textprintf_ex(buffer, font, 10, 120, WHITE, -1, "2 : Box");
+            textprintf_ex(buffer, font, 10, 130, WHITE, -1, "3 : Circle");
+            textprintf_ex(buffer, font, 10, 140, WHITE, -1, "4 : Free draw");
+            textprintf_ex(buffer, font, 10, 150, WHITE, -1, "5 : Custom Box");
+            textprintf_ex(buffer, font, 10, 160, WHITE, -1, "6 : Destroy last body");
+            textprintf_ex(buffer, font, 10, 170, WHITE, -1, "7 : Toggle static mode");
+            textprintf_ex(buffer, font, 10, 180, WHITE, -1, "8 : Pause");
+            textprintf_ex(buffer, font, 10, 190, WHITE, -1, "9 : Toggle Mouse lock");
+            textprintf_ex(buffer, font, 10, 205, WHITE, -1, "MB1 : Make bodies");
+            textprintf_ex(buffer, font, 10, 215, WHITE, -1, "MB2 : Make bombs");
+
+            textprintf_ex(buffer, font, 10, 235, WHITE, -1, "H : Hide all text");
+            textprintf_ex(buffer, font, 10, 245, WHITE, -1, "C : Toggle cursor");
+            textprintf_ex(buffer, font, 10, 255, WHITE, -1, "A : Auto dump bodies");
+            textprintf_ex(buffer, font, 10, 265, WHITE, -1, "N : Destroy last non-static body");
+            textprintf_ex(buffer, font, 10, 275, WHITE, -1, "M : Destroy all non-static body");
+            textprintf_ex(buffer, font, 10, 285, WHITE, -1, "S : Toggle small bodies");
+            textprintf_ex(buffer, font, 10, 295, WHITE, -1, "V : Custom polygon");
+            textprintf_ex(buffer, font, 10, 305, WHITE, -1, "X : Custom circle");
+            textprintf_ex(buffer, font, 10, 315, WHITE, -1, "P : Pyramid show");
+            textprintf_ex(buffer, font, 10, 325, WHITE, -1, "Arrow keys : Adjust gravity");
+        }
     }
     /*************************************************************************************************/
 
-    draw_sprite(buffer, mouse_sprite, mouse_x, mouse_y);
-
-    blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-    clear_bitmap(buffer);
+    if (cursorOn)
+        draw_sprite(buffer, mouse_sprite, mouse_x, mouse_y);
 }
 
 void Stage::toggleDebugDraw(void)

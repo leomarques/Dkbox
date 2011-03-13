@@ -3,6 +3,7 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="Dickbox" />
+		<Option platforms="Windows;Unix;" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -16,6 +17,10 @@
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
+				<Linker>
+					<Add library="C:\MinGW32\lib\libBox2D(concave)last.a" />
+					<Add library="C:\MinGW32\lib\liballeg44.dll.a" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option platforms="Windows;" />
@@ -30,6 +35,41 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-Wl,-subsystem,windows" />
+					<Add library="C:\MinGW32\lib\liballeg44.dll.a" />
+					<Add library="C:\MinGW32\lib\libBox2D(concave)last.a" />
+				</Linker>
+			</Target>
+			<Target title="Debug[Linux]">
+				<Option platforms="Unix;" />
+				<Option output="..\..\..\..\tmp\Dickbox" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="res" />
+				<Option object_output="obj\Debug[Linux]\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-I/usr/local/include" />
+					<Add option="-L/usr/lib -Wl,-Bsymbolic-functions -lalleg-4.2.2" />
+					<Add library="..\..\..\..\usr\local\lib\libBox2D.a" />
+				</Linker>
+			</Target>
+			<Target title="Release[Linux]">
+				<Option platforms="Unix;" />
+				<Option output="..\..\..\..\tmp\Dickbox" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="res" />
+				<Option object_output="obj\Release[Linux]\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-I/usr/local/include" />
+					<Add option="-L/usr/lib -Wl,-Bsymbolic-functions -lalleg-4.2.2" />
+					<Add library="..\..\..\..\usr\local\lib\libBox2D.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -37,20 +77,21 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Linker>
-			<Add library="box2d" />
-			<Add library="alleg44.dll" />
-		</Linker>
 		<Unit filename="res\config.ini" />
 		<Unit filename="res\icon.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Release" />
+			<Option target="Release[Linux]" />
 		</Unit>
 		<Unit filename="src\Body.h" />
 		<Unit filename="src\Bomb.cpp" />
 		<Unit filename="src\Bomb.h" />
 		<Unit filename="src\CustomBox.cpp" />
 		<Unit filename="src\CustomBox.h" />
+		<Unit filename="src\CustomCircle.cpp" />
+		<Unit filename="src\CustomCircle.h" />
+		<Unit filename="src\CustomPolygon.cpp" />
+		<Unit filename="src\CustomPolygon.h" />
 		<Unit filename="src\DebugDraw.cpp" />
 		<Unit filename="src\DebugDraw.h" />
 		<Unit filename="src\Engine.cpp" />

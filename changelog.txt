@@ -1,6 +1,39 @@
 Dickbox - code.google.com/p/dickbox
 by LeoDick - leommarques7@gmail.com
 
+r22 (13/03/2011)
+- Moving most changes from request to trunk.
+
+r21 (08/02/2011)
+- Gravity control changed again.
+- Engine changes.
+
+r20 (02/02/2011)
+- Gravity adjust tune.
+- Custom polygon feature added.
+
+r19 (14/01/2011)
+- Toggle cursor.
+- Auto dump bodies.
+- Option to delete only non-static bodies.
+- Small bodies option.
+- Gravity adjust.
+- Custom circle.
+- Linux build.
+
+r18 (10/01/2011)
+- Press 'H' to hide all text.
+- Static bodies are invisible.
+- Discrete cursor.
+- Bodies are now coloured filled
+
+Moved to branches/request.
+
+Tools versions:
+- Allegro 4.4.1.1
+- Code::Blocks 10.05
+Binaries compiled with MinGW (gcc 4.5.1 TDM-1) on Windows 7 64bits.
+
 r17 (02/03/2010)
 - Fixed myPow().
 

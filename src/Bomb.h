@@ -2,7 +2,8 @@
 #define BOMB_H_INCLUDED
 
 #include <Box2D.h>
-#include <Allegro.h>
+#include <allegro.h>
+
 
 #include "Body.h"
 
