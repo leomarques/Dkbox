@@ -1,7 +1,7 @@
 #ifndef INPUT_H_INCLUDED
 #define INPUT_H_INCLUDED
 
-#include <Allegro.h>
+#include <allegro.h>
 
 #define KEY0 0
 #define KEY1 1
@@ -17,7 +17,19 @@
 #define KEYESC 11
 #define KEYTAB 12
 #define KEYP 13
-#define NKEYS 14
+#define KEYH 14
+#define KEYA 15
+#define KEYC 16
+#define KEYN 17
+#define KEYM 18
+#define KEYS 19
+#define KEYUP 20
+#define KEYDOWN 21
+#define KEYLEFT 22
+#define KEYRIGHT 23
+#define KEYX 24
+#define KEYV 25
+#define NKEYS 26
 
 extern bool keys[NKEYS];
 extern bool mouse[2];

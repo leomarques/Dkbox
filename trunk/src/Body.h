@@ -2,7 +2,7 @@
 #define BODY_H_INCLUDED
 
 #include <Box2D.h>
-#include <Allegro.h>
+#include <allegro.h>
 
 #include "MathUtils.h"
 #include "GameUtils.h"
@@ -38,6 +38,11 @@ public:
         getB2World()->DestroyBody(body);
     }
 
+    void wakeUp(void)
+    {
+        body->WakeUp();
+    }
+
     b2World* getB2World(void)
     {
         return body->GetWorld();
@@ -51,6 +56,16 @@ public:
     Point getAllegPosition(void)
     {
         return coordB2ToAlleg(getB2Position());
+    }
+
+    float32 getMass(void)
+    {
+        return body->GetMass();
+    }
+
+    bool isStatic(void)
+    {
+        return getMass() == 0;
     }
 
     float32 getB2Angle(void)
